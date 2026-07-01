@@ -59,8 +59,8 @@
         Commandes
     </a>
 
-    <a href="${pageContext.request.contextPath}/statistiques"
-    class="${activeMenu == 'statistiques' ? 'active' : ''}">
+    <a href="${pageContext.request.contextPath}/statistique"
+    class="${activeMenu == 'statistique' ? 'active' : ''}">
         Statistiques
     </a>
 

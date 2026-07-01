@@ -1,6 +1,8 @@
 package com.mkalymlam.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -297,5 +299,201 @@ public class StatistiqueService {
         return executeStatQuery(sql, idItineraire);
     }
 
+    // =========================================================================
+    // AJOUTS - nécessaires pour que StatistiqueController compile (il appelait
+    // déjà ces signatures avec dateDebut/dateFin) et pour le filtre par zone.
+    // Aucune méthode existante ci-dessus n'a été modifiée.
+    // =========================================================================
+
+    /**
+     * Chiffre d'affaires global, filtrable par plage de dates (bornes incluses).
+     * dateDebut/dateFin peuvent être null (= pas de borne de ce côté).
+     */
+    public Double getChiffreAffaireGlobal(LocalDate dateDebut, LocalDate dateFin) {
+        StringBuilder sql = new StringBuilder("""
+            SELECT COALESCE(SUM("montantTotal"),0)
+            FROM "commande"
+            WHERE 1=1
+            """);
+        List<Object> params = new ArrayList<>();
+        if (dateDebut != null) {
+            sql.append(" AND \"dateHeureCreation\" >= ?");
+            params.add(dateDebut.atStartOfDay());
+        }
+        if (dateFin != null) {
+            sql.append(" AND \"dateHeureCreation\" < ?");
+            params.add(dateFin.plusDays(1).atStartOfDay());
+        }
+        return jdbcTemplate.queryForObject(sql.toString(), Double.class, params.toArray());
+    }
+
+    /**
+     * Bénéfice total, filtrable par plage de dates (bornes incluses).
+     */
+    public Double getBeneficeTotal(LocalDate dateDebut, LocalDate dateFin) {
+        StringBuilder sql = new StringBuilder("""
+            SELECT COALESCE(SUM("montantDepense"),0)
+            FROM "depense"
+            WHERE 1=1
+            """);
+        List<Object> params = new ArrayList<>();
+        if (dateDebut != null) {
+            sql.append(" AND \"dateDepense\" >= ?");
+            params.add(dateDebut);
+        }
+        if (dateFin != null) {
+            sql.append(" AND \"dateDepense\" < ?");
+            params.add(dateFin.plusDays(1));
+        }
+        Double depense = jdbcTemplate.queryForObject(sql.toString(), Double.class, params.toArray());
+        return getChiffreAffaireGlobal(dateDebut, dateFin) - depense;
+    }
+
+    /**
+     * Données du graphique, filtrables par plage de dates (bornes incluses).
+     * Même logique que getDonneesGraphique() mais avec un WHERE conditionnel
+     * sur "dateSession" et "dateDepense".
+     */
+    public List<Map<String, Object>> getDonneesGraphique(LocalDate dateDebut, LocalDate dateFin) {
+        StringBuilder sql = new StringBuilder("""
+                    SELECT
+                        COALESCE(rev."date", dep."date") AS "periode",
+                        COALESCE(rev."chiffreAffaire", 0) AS "chiffreAffaire",
+                        COALESCE(rev."chiffreAffaire", 0) - COALESCE(dep."montantDepense", 0) AS "benefice"
+                    FROM (
+                        SELECT "dateSession" AS "date", SUM("chiffreAffaireTotal") AS "chiffreAffaire"
+                        FROM "sessionTruck"
+                        WHERE 1=1
+                """);
+        List<Object> params = new ArrayList<>();
+        if (dateDebut != null) {
+            sql.append(" AND \"dateSession\" >= ?");
+            params.add(dateDebut);
+        }
+        if (dateFin != null) {
+            sql.append(" AND \"dateSession\" < ?");
+            params.add(dateFin.plusDays(1));
+        }
+        sql.append("""
+                        GROUP BY "dateSession"
+                    ) rev
+                    FULL JOIN (
+                        SELECT "dateDepense" AS "date", SUM("montantDepense") AS "montantDepense"
+                        FROM "depense"
+                        WHERE 1=1
+                """);
+        if (dateDebut != null) {
+            sql.append(" AND \"dateDepense\" >= ?");
+            params.add(dateDebut);
+        }
+        if (dateFin != null) {
+            sql.append(" AND \"dateDepense\" < ?");
+            params.add(dateFin.plusDays(1));
+        }
+        sql.append("""
+                        GROUP BY "dateDepense"
+                    ) dep ON dep."date" = rev."date"
+                    ORDER BY "periode"
+                """);
+        return executeStatQuery(sql.toString(), params.toArray());
+    }
+
+    /**
+     * Liste des zones distinctes (table "itineraire"), pour peupler le filtre zone.
+     */
+    public List<String> getZones() {
+        String sql = """
+            SELECT DISTINCT "nomZone"
+            FROM "itineraire"
+            WHERE "nomZone" IS NOT NULL
+            ORDER BY "nomZone"
+            """;
+        return jdbcTemplate.queryForList(sql, String.class);
+    }
+
+    /**
+     * Chiffre d'affaires groupé par zone, en une seule requête :
+     * SessionTruck -> Itineraire (nomZone) -> Commande (montantTotal).
+     * dateDebut/dateFin (optionnels) filtrent sur "sessionTruck"."dateSession".
+     */
+    public List<Map<String, Object>> getChiffreAffaireParZoneGroupe(LocalDate dateDebut, LocalDate dateFin) {
+        StringBuilder sql = new StringBuilder("""
+            SELECT i."nomZone" AS "zone", COALESCE(SUM(c."montantTotal"),0) AS "chiffreAffaire"
+            FROM "sessionTruck" st
+            JOIN "itineraire" i ON i."idItineraire" = st."idItineraire"
+            LEFT JOIN "commande" c ON c."idSession" = st."idSession"
+            WHERE 1=1
+            """);
+        List<Object> params = new ArrayList<>();
+        if (dateDebut != null) {
+            sql.append(" AND st.\"dateSession\" >= ?");
+            params.add(dateDebut);
+        }
+        if (dateFin != null) {
+            sql.append(" AND st.\"dateSession\" < ?");
+            params.add(dateFin.plusDays(1));
+        }
+        sql.append("""
+            GROUP BY i."nomZone"
+            ORDER BY i."nomZone"
+            """);
+        return executeStatQuery(sql.toString(), params.toArray());
+    }
+
+    /**
+     * Bénéfice groupé par zone : CA par zone (via Commande) moins les dépenses
+     * par zone (via Depense), chacun agrégé séparément avant jointure pour
+     * éviter un produit cartésien entre les deux jointures one-to-many.
+     */
+    public List<Map<String, Object>> getBeneficeParZoneGroupe(LocalDate dateDebut, LocalDate dateFin) {
+        StringBuilder revSql = new StringBuilder("""
+            SELECT i."nomZone" AS "zone", SUM(c."montantTotal") AS "ca"
+            FROM "sessionTruck" st
+            JOIN "itineraire" i ON i."idItineraire" = st."idItineraire"
+            JOIN "commande" c ON c."idSession" = st."idSession"
+            WHERE 1=1
+            """);
+        List<Object> revParams = new ArrayList<>();
+        if (dateDebut != null) {
+            revSql.append(" AND st.\"dateSession\" >= ?");
+            revParams.add(dateDebut);
+        }
+        if (dateFin != null) {
+            revSql.append(" AND st.\"dateSession\" < ?");
+            revParams.add(dateFin.plusDays(1));
+        }
+        revSql.append(" GROUP BY i.\"nomZone\"");
+
+        StringBuilder depSql = new StringBuilder("""
+            SELECT i."nomZone" AS "zone", SUM(d."montantDepense") AS "depense"
+            FROM "sessionTruck" st
+            JOIN "itineraire" i ON i."idItineraire" = st."idItineraire"
+            JOIN "depense" d ON d."idSession" = st."idSession"
+            WHERE 1=1
+            """);
+        List<Object> depParams = new ArrayList<>();
+        if (dateDebut != null) {
+            depSql.append(" AND st.\"dateSession\" >= ?");
+            depParams.add(dateDebut);
+        }
+        if (dateFin != null) {
+            depSql.append(" AND st.\"dateSession\" < ?");
+            depParams.add(dateFin.plusDays(1));
+        }
+        depSql.append(" GROUP BY i.\"nomZone\"");
+
+        String sql = """
+            SELECT COALESCE(rev."zone", dep."zone") AS "zone",
+                COALESCE(rev."ca", 0) - COALESCE(dep."depense", 0) AS "benefice"
+            FROM (%s) rev
+            FULL JOIN (%s) dep ON dep."zone" = rev."zone"
+            ORDER BY "zone"
+            """.formatted(revSql, depSql);
+
+        List<Object> params = new ArrayList<>();
+        params.addAll(revParams);
+        params.addAll(depParams);
+        return executeStatQuery(sql, params.toArray());
+    }
 
 }

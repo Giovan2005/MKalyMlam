@@ -1,0 +1,31 @@
+-------------------------------------------------------------------------------
+Test set: com.mkalymlam.service.StatistiqueServiceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.374 s <<< FAILURE! -- in com.mkalymlam.service.StatistiqueServiceTest
+com.mkalymlam.service.StatistiqueServiceTest.shouldUseZoneAndPeriodFiltersForGraphData -- Time elapsed: 0.366 s <<< ERROR!
+java.lang.Error: 
+Unresolved compilation problems: 
+	Syntax error, insert ")" to complete ClassInstanceCreationExpression
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	Syntax error on token "").append(periodExpression).append("", invalid AssignmentOperator
+	Syntax error on token "rev", ; expected
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+	Syntax error on token """", invalid AssignmentOperator
+	String literal is not properly closed by a double-quote
+	Syntax error on token "Invalid Character", instanceof expected
+	Syntax error on token "Invalid Character", instanceof expected
+	Syntax error, insert ")" to complete MethodInvocation
+	Syntax error, insert ";" to complete Statement
+	Syntax error on token "").append(periodExpression).append("", invalid AssignmentOperator
+	Syntax error on token "dep", ; expected
+	Syntax error on token ".", ; expected
+	Syntax error on token ""periode"", @ expected
+	Syntax error, insert ":: IdentifierOrNew" to complete ReferenceExpression
+	Syntax error, insert ";" to complete Statement
+
+	at com.mkalymlam.service.StatistiqueService.getDonneesGraphique(StatistiqueService.java:245)
+	at com.mkalymlam.service.StatistiqueServiceTest.shouldUseZoneAndPeriodFiltersForGraphData(StatistiqueServiceTest.java:26)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
