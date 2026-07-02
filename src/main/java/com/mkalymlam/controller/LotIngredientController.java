@@ -1,6 +1,7 @@
 package com.mkalymlam.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -83,8 +84,28 @@ public class LotIngredientController {
     }
 
     @GetMapping("/findAll")
-    public String findAll(Model model) {
-        model.addAttribute("lots", service.getAllWithAlertStatus());
+    public String findAll(
+            @RequestParam(required = false) String nomIngredient,
+            @RequestParam(required = false) Boolean alerte,
+            Model model) {
+        
+        List<LotIngredient> lots;
+        
+        // filtre par nom si il y a un ingrédient lors de la recherche
+        if (nomIngredient != null && !nomIngredient.isEmpty()) {
+            lots = service.findByIngredientName(nomIngredient);
+        } else {
+            lots = service.getAllWithAlertStatus();
+        }
+        
+        // si le filtre alerte est activé, on filtre les lots en alerte
+        if (alerte != null && alerte) {
+            lots = lots.stream()
+                    .filter(lot -> service.verifierAlerte(lot))
+                    .collect(Collectors.toList());
+        }
+    
+        model.addAttribute("lots", lots);
         return "lot/list";
     }
 

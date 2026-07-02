@@ -41,6 +41,56 @@
 
             </div>
 
+            <!-- Filtres -->
+            <div class="filters-container">
+                <form action="${pageContext.request.contextPath}/lot/findAll" method="get" class="filters-form">
+                    
+                    <!-- Filtre par nom d'ingrédient -->
+                    <div class="filter-group">
+                        <label for="nomIngredient" class="filter-label">
+                            <i class="fas fa-search"></i>
+                            Rechercher
+                        </label>
+                        <input 
+                            type="text" 
+                            id="nomIngredient" 
+                            name="nomIngredient" 
+                            value="${param.nomIngredient}" 
+                            placeholder="Nom de l'ingrédient..."
+                            class="filter-input">
+                    </div>
+                    
+                    <!-- Filtre par alerte -->
+                    <div class="filter-group filter-checkbox">
+                        <label for="alerte" class="filter-label">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Alerte
+                        </label>
+                        <input 
+                            type="checkbox" 
+                            id="alerte" 
+                            name="alerte" 
+                            value="true"
+                            ${param.alerte != null ? 'checked' : ''}
+                            class="filter-checkbox">
+                        <span class="filter-checkbox-label">Afficher uniquement les lots en alerte</span>
+                    </div>
+                    
+                    <!-- Boutons d'action -->
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-filter">
+                            <i class="fas fa-filter"></i>
+                            Filtrer
+                        </button>
+                        <a href="${pageContext.request.contextPath}/lot/findAll" class="btn-filter-reset">
+                            <i class="fas fa-undo"></i>
+                            Réinitialiser
+                        </a>
+                    </div>
+                    
+                </form>
+            </div>
+
             <!-- Tableau -->
             <table>
 
@@ -50,8 +100,8 @@
                         <th><i class="fas fa-tag"></i> Ingrédient</th>
                         <th><i class="fas fa-calendar-plus"></i> Date de réception</th>
                         <th><i class="fas fa-calendar-times"></i> Date de péremption</th>
-                        <th><i class="fas fa-weight"></i> Quantité initiale</th>
-                        <th><i class="fas fa-weight-hanging"></i> Quantité restante</th>
+                        <th><i class="fas fa-weight"></i> Qtt initiale</th>
+                        <th><i class="fas fa-weight-hanging"></i> Qtt restante</th>
                         <th><i class="fas fa-euro-sign"></i> Prix d'achat unitaire</th>
                         <th><i class="fas fa-info-circle"></i> Statut</th>
                         <th><i class="fas fa-cog"></i> Actions</th>
