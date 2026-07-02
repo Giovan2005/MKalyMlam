@@ -9,3 +9,7 @@ INSERT INTO "utilisateur" ("nom", "prenom", "email", "motDePasse", "idRole", "sa
 ('Randria', 'Marie', 'marie.randria@email.com', 'password123', 4, 480000.00, TRUE),
 ('Andria', 'Tiana', 'tiana.andria@email.com', 'password123', 4, 520000.00, TRUE),
 ('Ratsimba', 'Lalao', 'lalao.ratsimba@email.com', 'password123', 4, 470000.00, TRUE);
+
+
+INSERT INTO "utilisateur" ("nom", "prenom", "email", "motDePasse", "idRole", "salaireBaseFixe", "statutActif") VALUES
+('Ranoro', 'Lalao', 'ranoro.ratsimba@email.com', 'password123', 3, 470000.00, TRUE);
