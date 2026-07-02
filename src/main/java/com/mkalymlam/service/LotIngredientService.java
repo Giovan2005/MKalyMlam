@@ -111,4 +111,12 @@ public class LotIngredientService {
         Double quantiteActuelle = lotIngredientRepository.sumQuantiteRestanteByIdIngredient(idIngredient);
         return quantiteActuelle != null ? quantiteActuelle : 0.0;
     }
+
+    public List<LotIngredient> getAllWithAlertStatus() {
+        List<LotIngredient> lots = lotIngredientRepository.findAll();
+        lots.forEach(lot -> {
+            lot.setAlerte(verifierAlerte(lot));
+        });
+        return lots;
+    }
 }

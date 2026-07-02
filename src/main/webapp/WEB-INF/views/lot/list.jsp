@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style_form.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style_list.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style_badge.css">
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -137,27 +138,27 @@
                             </td>
 
                             <td>
-                                <c:choose>
-                                    <c:when test="${lot.quantiteRestante == 0}">
-                                        <span class="badge badge-status status-out">
-                                            <i class="fas fa-times-circle"></i>
-                                            Épuisé
-                                        </span>
-                                    </c:when>
-                                    <c:when test="${lot.quantiteRestante <= (lot.quantiteInitiale * 0.2)}">
-                                        <span class="badge badge-status status-low">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            Stock faible
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="badge badge-status status-ok">
-                                            <i class="fas fa-check-circle"></i>
-                                            Disponible
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
+    <c:choose>
+        <c:when test="${lot.quantiteRestante == 0}">
+            <span class="badge bg-danger">
+                <i class="fas fa-times-circle"></i>
+                Épuisé
+            </span>
+        </c:when>
+        <c:when test="${lot.alerte}">
+            <span class="badge bg-warning text-dark">
+                <i class="fas fa-exclamation-triangle"></i>
+                ALERTE
+            </span>
+        </c:when>
+        <c:otherwise>
+            <span class="badge bg-success">
+                <i class="fas fa-check-circle"></i>
+                OK
+            </span>
+        </c:otherwise>
+    </c:choose>
+</td>
 
                             <td>
 
