@@ -14,7 +14,7 @@ import jakarta.persistence.Transient;
 
 
 @Entity
-@Table(name = "\"ligneCommande\"")
+@Table(name = "LigneCommande")
 public class LigneCommande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

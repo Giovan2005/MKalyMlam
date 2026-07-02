@@ -219,11 +219,11 @@ CREATE TABLE "sessionTruck" (
 );
 
 CREATE TABLE "equipeSession" (
+    "idEquipeSession" SERIAL PRIMARY KEY,
     "idSession" INT NOT NULL,
     "idUtilisateur" INT NOT NULL,
     "idRoleDuJour" INT NOT NULL,
     "salaireJournalierRemplacant" NUMERIC(10, 2),
-    PRIMARY KEY ("idSession", "idUtilisateur"),
     FOREIGN KEY ("idSession") REFERENCES "sessionTruck"("idSession"),
     FOREIGN KEY ("idUtilisateur") REFERENCES "utilisateur"("idUtilisateur"),
     FOREIGN KEY ("idRoleDuJour") REFERENCES "role"("idRole")
@@ -267,6 +267,14 @@ CREATE TABLE "lotIngredient" (
     FOREIGN KEY ("idIngredient") REFERENCES "ingredient"("idIngredient")
 );
 
+    - Elements necessaires:
+        -> 
+
+#### 2- Benefice totaux: 
+- globalite: 
+    - Benefice globale 
+    - Consultation:
+        - Benefice / mois
 CREATE TABLE "equipement" (
     "idEquipement" SERIAL PRIMARY KEY,
     "nomEquipement" VARCHAR(100) NOT NULL,
