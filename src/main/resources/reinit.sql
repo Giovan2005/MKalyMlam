@@ -16,3 +16,8 @@ INSERT INTO ingredient (nomIngredient, seuilAlerteQuantite, uniteMesure) VALUES
 ('Sel fin', 1.0, 'kg'),
 ('Beurre doux', 2.5, 'kg'),
 ('Œufs frais', 12.0, 'unité');
+
+
+
+ALTER TABLE "ligneCommande"
+ALTER COLUMN "prixUnitaireFacture" DROP NOT NULL;

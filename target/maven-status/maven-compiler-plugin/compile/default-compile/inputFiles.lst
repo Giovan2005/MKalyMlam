@@ -1,31 +1,38 @@
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/MkalymlamApplication.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/CommandeController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/DashboardController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/IngredientController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/ItineraireController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/LigneCommandeController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/ProduitController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/RecetteBaseController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/VendeuseController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Commande.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Ingredient.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Itineraire.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/LigneCommande.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Produit.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBase.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBaseId.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/CommandeRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/IngredientRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/ItineraireRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/LigneCommandeRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/ProduitRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/RecetteBaseRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/IngredientService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/ItineraireService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/ProduitService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/RecetteBaseService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService1.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/VenteService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/view/ViewController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/MkalymlamApplication.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/AuthController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/AuthViewController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/CommandeController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/DashboardController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/IngredientController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/ItineraireController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/LigneCommandeController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/ProduitController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/RecetteBaseController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/controller/VendeuseController.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/dto/LoginRequest.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/dto/RegisterRequest.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/Commande.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/Ingredient.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/Itineraire.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/LigneCommande.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/Produit.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBase.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBaseId.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/entity/Utilisateur.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/CommandeRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/IngredientRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/ItineraireRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/LigneCommandeRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/ProduitRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/RecetteBaseRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/repository/UtilisateurRepository.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/AuthService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/IngredientService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/ItineraireService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/ProduitService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/RecetteBaseService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService1.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/service/VenteService.java
+/home/user/Projets/kaly/SPRINT0/MKalyMlam/src/main/java/com/mkalymlam/view/ViewController.java

@@ -1,0 +1,173 @@
+:root {
+    --brand: #da291c;
+    --brand-dark: #b71c13;
+    --accent: #ffc72c;
+    --accent-dark: #e6b430;
+    --bg: #f5f5f5;
+    --panel: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #666666;
+    --line: #e0e0e0;
+    --danger: #b91c1c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 16px;
+}
+
+.page {
+    width: min(1100px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 28px 0;
+}
+
+.header {
+    margin-bottom: 22px;
+}
+
+.header h1 {
+    margin: 0 0 4px;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--brand);
+}
+
+.header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.card {
+    background: var(--panel);
+    border-radius: 6px;
+    padding: 18px 20px;
+    border-left: 4px solid var(--brand);
+}
+
+.card span {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card strong {
+    display: block;
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--ink);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.chart-panel,
+.table-panel {
+    background: var(--panel);
+    border-radius: 6px;
+    border: 1px solid var(--line);
+}
+
+.panel-head {
+    padding: 14px 18px 0;
+}
+
+.panel-head h2 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--brand);
+    font-weight: 600;
+}
+
+.panel-head small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.chart-wrap {
+    height: 300px;
+    padding: 12px 18px 18px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    padding: 10px 18px 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th,
+td {
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+}
+
+.error {
+    display: none;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    color: var(--danger);
+    background: #fef2f2;
+    font-size: 13px;
+}
+
+@media (max-width: 760px) {
+    .page {
+        width: min(100% - 20px, 1100px);
+        padding: 18px 0;
+    }
+
+    .cards,
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-wrap {
+        height: 260px;
+    }
+}
