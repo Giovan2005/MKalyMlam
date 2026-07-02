@@ -79,7 +79,9 @@
         Employés
     </a>
 
-    
-
+    <a href="${pageContext.request.contextPath}/session/liste"
+    class="${activeMenu == 'sessions' ? 'active' : ''}">
+        Sessions
+    </a>
 
 </div>
