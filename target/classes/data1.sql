@@ -42,3 +42,25 @@ INSERT INTO "itineraire" ("nomZone", "lieuExact", "heureDebutPrevue", "heureFinP
 ('Ambohijatovo', 'Devant la banque BNI', '11:00:00', '15:00:00', 'VENDREDI'),
 ('Antaninandro', 'Pres du marché', '17:00:00', '21:00:00', 'VENDREDI'),
 ('Ambodivona', 'Pres de Telma', '10:00:00', '14:00:00', 'SAMEDI');
+
+
+
+
+
+
+======donnees============
+INSERT INTO "utilisateur" ("nom", "prenom", "email", "motDePasse", "idRole", "salaireBaseFixe", "statutActif") VALUES
+('Dubois', 'Pierre', 'pierre.dubois@foodtruck.fr', 'hashed_password', 1, 2800.00, true),
+('Martin', 'Sophie', 'sophie.martin@foodtruck.fr', 'hashed_password', 2, 1950.00, true),
+('Bernard', 'Lucas', 'lucas.bernard@foodtruck.fr', 'hashed_password', 3, 2100.00, true),
+('Petit', 'Emma', 'emma.petit@foodtruck.fr', 'hashed_password', 2, 1950.00, false),
+('Lefèvre', 'Thomas', 'thomas.lefevre@foodtruck.fr', 'hashed_password', 4, 1850.00, true),
+('Moreau', 'Camille', 'camille.moreau@foodtruck.fr', 'hashed_password', 5, 1700.00, true);
+
+
+-- Insérer quelques absences de test
+INSERT INTO "absenceConge" ("idUtilisateur", "idTypeConge", "dateDebut", "dateFin", "idStatutValidation", "deductionSalaireAppliquee", "idRemplacant")
+VALUES
+(1, 1, '2026-08-01', '2026-08-10', 1, 150.00, 2),  -- Pierre Dubois (admin) en congé payé, en attente, remplacé par Sophie Martin
+(2, 2, '2026-07-15', '2026-07-17', 2, 80.00, NULL), -- Sophie Martin maladie, validé
+(3, 3, '2026-07-20', '2026-07-20', 3, 0.00, NULL);  -- Lucas Bernard absence injustifiée, refusé
