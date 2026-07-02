@@ -31,7 +31,11 @@ public class LotIngredientService {
     }
 
     public List<LotIngredient> findByIngredientName(String nomIngredient) {
-        return lotIngredientRepository.findByIngredient_NomIngredientContainingIgnoreCase(nomIngredient);
+        List<LotIngredient> lots = lotIngredientRepository.findByIngredient_NomIngredientContainingIgnoreCase(nomIngredient);
+        lots.forEach(lot -> {
+            lot.setAlerte(verifierAlerte(lot));
+        });
+        return lots;
     }
 
     public LotIngredient getById(Long id) {
