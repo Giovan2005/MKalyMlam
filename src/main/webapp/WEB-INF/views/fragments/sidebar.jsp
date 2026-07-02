@@ -49,6 +49,11 @@
         Ingrédients
     </a>
 
+    <a href="${pageContext.request.contextPath}/lot/findAll"
+    class="${activeMenu == 'lots' ? 'active' : ''}">
+        Lots
+    </a>
+
     <a href="${pageContext.request.contextPath}/recetteBase"
     class="${activeMenu == 'recetteBase' ? 'active' : ''}">
         Recette de Base
