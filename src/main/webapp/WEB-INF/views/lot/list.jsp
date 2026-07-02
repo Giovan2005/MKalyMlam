@@ -34,7 +34,7 @@
                     Liste des lots d'ingrédients
                 </h1>
 
-                <a href="${pageContext.request.contextPath}/lot/save"
+                <a href="${pageContext.request.contextPath}/lot/new"
                    class="btn-add">
                     Ajouter un nouveau lot
                 </a>
@@ -99,19 +99,14 @@
                             </td>
 
                             <td>
-                                <span class="badge badge-date">
-                                    <i class="fas fa-calendar-day"></i>
                                     ${lot.dateReception}
-                                </span>
                             </td>
 
                             <td>
                                 <c:choose>
                                     <c:when test="${lot.datePeremption != null}">
-                                        <span class="badge badge-date">
-                                            <i class="fas fa-calendar-day"></i>
+                                
                                             ${lot.datePeremption}
-                                        </span>
                                     </c:when>
                                     <c:otherwise>
                                         <span class="text-muted">-</span>
@@ -120,45 +115,45 @@
                             </td>
 
                             <td>
-                                <span class="badge badge-quantity">
+                                <span class="">
                                     ${lot.quantiteInitiale}
                                 </span>
                             </td>
 
                             <td>
-                                <span class="badge badge-quantity">
+                                <span class="">
                                     ${lot.quantiteRestante}
                                 </span>
                             </td>
 
                             <td>
-                                <span class="badge badge-price">
+                                <span class="price-tag">
                                     ${lot.prixAchatUnitaire} €
                                 </span>
                             </td>
 
                             <td>
-    <c:choose>
-        <c:when test="${lot.quantiteRestante == 0}">
-            <span class="badge bg-danger">
-                <i class="fas fa-times-circle"></i>
-                Épuisé
-            </span>
-        </c:when>
-        <c:when test="${lot.alerte}">
-            <span class="badge bg-warning text-dark">
-                <i class="fas fa-exclamation-triangle"></i>
-                ALERTE
-            </span>
-        </c:when>
-        <c:otherwise>
-            <span class="badge bg-success">
-                <i class="fas fa-check-circle"></i>
-                OK
-            </span>
-        </c:otherwise>
-    </c:choose>
-</td>
+                                <c:choose>
+                                    <c:when test="${lot.quantiteRestante == 0}">
+                                        <span class="badge bg-danger">
+                                            <i class="fas fa-times-circle"></i>
+                                            Épuisé
+                                        </span>
+                                    </c:when>
+                                    <c:when test="${lot.alerte}">
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ALERTE
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check-circle"></i>
+                                            OK
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
 
                             <td>
 
@@ -166,7 +161,7 @@
 
                                     <!-- Modifier -->
                                     <a href="${pageContext.request.contextPath}/lot/update/${lot.idLot}"
-                                       class="btn-edit">
+                                    class="btn-edit">
 
                                         <i class="fas fa-edit"></i>
                                         Modifier
@@ -186,7 +181,6 @@
                                             Supprimer
 
                                         </button>
-
                                     </form>
 
                                 </div>
