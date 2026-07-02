@@ -1,3 +1,4 @@
+\c postgres;
 drop database "foodTruckDb";
 
 CREATE DATABASE "foodTruckDb";
@@ -267,6 +268,14 @@ CREATE TABLE "lotIngredient" (
     FOREIGN KEY ("idIngredient") REFERENCES "ingredient"("idIngredient")
 );
 
+--     - Elements necessaires:
+--         -> 
+
+-- #### 2- Benefice totaux: 
+-- - globalite: 
+--     - Benefice globale 
+--     - Consultation:
+--         - Benefice / mois
 CREATE TABLE "equipement" (
     "idEquipement" SERIAL PRIMARY KEY,
     "nomEquipement" VARCHAR(100) NOT NULL,
@@ -317,35 +326,17 @@ CREATE TABLE "recetteDeBase" (
     FOREIGN KEY ("idIngredient") REFERENCES "ingredient"("idIngredient")
 );
 
--- CREATE TABLE "commande" (
---     "idCommande" SERIAL PRIMARY KEY,
---     "idSession" INT NOT NULL,
---     "idVendeuse" INT,
---     "idTypeCommande" INT NOT NULL,
---     "dateHeureCreation" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     "heureRecuperationPrevue" TIME,
---     "lieuRecuperationPrevu" VARCHAR(150),
---     "montantTotal" NUMERIC(12, 2) NOT NULL,
---     "idStatutCommande" INT NOT NULL,
---     "idTypeTarification" INT NOT NULL,
---     FOREIGN KEY ("idSession") REFERENCES "sessionTruck"("idSession"),
---     FOREIGN KEY ("idVendeuse") REFERENCES "utilisateur"("idUtilisateur"),
---     FOREIGN KEY ("idTypeCommande") REFERENCES "typeCommande"("idTypeCommande"),
---     FOREIGN KEY ("idStatutCommande") REFERENCES "statutCommande"("idStatutCommande"),
---     FOREIGN KEY ("idTypeTarification") REFERENCES "typeTarification"("idTypeTarification")
--- );
-
 CREATE TABLE "commande" (
     "idCommande" SERIAL PRIMARY KEY,
-    "idSession" INT,
+    "idSession" INT NOT NULL,
     "idVendeuse" INT,
-    "idTypeCommande" INT,
+    "idTypeCommande" INT NOT NULL,
     "dateHeureCreation" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "heureRecuperationPrevue" TIME,
     "lieuRecuperationPrevu" VARCHAR(150),
-    "montantTotal" NUMERIC(12, 2),
-    "idStatutCommande" INT,
-    "idTypeTarification" INT,
+    "montantTotal" NUMERIC(12, 2) NOT NULL,
+    "idStatutCommande" INT NOT NULL,
+    "idTypeTarification" INT NOT NULL,
     FOREIGN KEY ("idSession") REFERENCES "sessionTruck"("idSession"),
     FOREIGN KEY ("idVendeuse") REFERENCES "utilisateur"("idUtilisateur"),
     FOREIGN KEY ("idTypeCommande") REFERENCES "typeCommande"("idTypeCommande"),
@@ -362,9 +353,6 @@ CREATE TABLE "ligneCommande" (
     FOREIGN KEY ("idCommande") REFERENCES "commande"("idCommande"),
     FOREIGN KEY ("idProduit") REFERENCES "produit"("idProduit")
 );
-
--- ALTER TABLE "ligneCommande"
--- ALTER COLUMN "prixUnitaireFacture" DROP NOT NULL;
 
 CREATE TABLE "personnalisationCommande" (
     "idPersonnalisation" SERIAL PRIMARY KEY,
@@ -447,3 +435,200 @@ CREATE TABLE "notificationPlateforme" (
     FOREIGN KEY ("idProduitLie") REFERENCES "produit"("idProduit"),
     FOREIGN KEY ("idSessionLiee") REFERENCES "sessionTruck"("idSession")
 );
+
+
+
+
+-- view.sql
+CREATE OR REPLACE VIEW "view_Itineraire_SessionTruck_Depense" AS
+SELECT
+    i."idItineraire",
+    i."nomZone",
+
+    s."idSession",
+    s."idTruck",
+    s."dateSession",
+    s."fondDeCaisseOuverture",
+    s."fondDeCaisseCloture",
+    s."chiffreAffaireTotal",
+
+    COALESCE(d."montantDepenseTotal",0) AS "montantDepenseTotal"
+
+FROM "itineraire" i
+
+INNER JOIN "sessionTruck" s
+    ON i."idItineraire" = s."idItineraire"
+
+LEFT JOIN (
+    SELECT
+        "idSession",
+        SUM("montantDepense") AS "montantDepenseTotal"
+    FROM "depense"
+    GROUP BY "idSession"
+) d
+    ON s."idSession" = d."idSession";
+    
+
+
+-- data.sql
+INSERT INTO "role" ("libelle") VALUES ('ADMIN'), ('VENDEUSE'), ('CUISINIER'), ('CHAUFFEUR'), ('REMPLACANT');
+
+INSERT INTO "typeConge" ("libelle") VALUES ('CONGE_PAYE'), ('ABSENCE_MALADIE'), ('ABSENCE_INJUSTIFIEE'), ('CONGE_EXCEPTIONNEL');
+
+INSERT INTO "statutValidation" ("libelle") VALUES ('EN_ATTENTE'), ('VALIDE'), ('REFUSE');
+
+INSERT INTO "statutDisponibilite" ("libelle") VALUES ('DISPONIBLE'), ('EN_MAINTENANCE'), ('PANNE');
+
+INSERT INTO "statutSession" ("libelle") VALUES ('OUVERTE'), ('CLOTUREE'), ('ANNULEE_METEO');
+
+INSERT INTO "typeEquipement" ("libelle") VALUES ('EMBALLAGE'), ('CUILLERE'), ('REFRIGERATEUR'), ('MACHINE');
+
+INSERT INTO "statutAlerte" ("libelle") VALUES ('OK'), ('SOLOINA'), ('TOKONY_VIDIANA');
+
+INSERT INTO "methodeComptable" ("libelle") VALUES ('LIFO'), ('CUMP');
+
+INSERT INTO "typeItem" ("libelle") VALUES ('INGREDIENT'), ('EQUIPEMENT');
+
+INSERT INTO "typeCommande" ("libelle") VALUES ('SUR_PLACE'), ('A_EMPORTER'), ('EN_LIGNE');
+
+INSERT INTO "statutCommande" ("libelle") VALUES ('EN_ATTENTE'), ('PREPARATION'), ('PRETE_POUR_RECUPERATION'), ('LIVREE'), ('ANNULEE');
+
+INSERT INTO "typeTarification" ("libelle") VALUES ('HEURE_NORMALE'), ('HEURE_SUPP');
+
+INSERT INTO "actionCommande" ("libelle") VALUES ('AJOUTER'), ('RETIRER');
+
+INSERT INTO "modePaiement" ("libelle") VALUES ('ESPECE'), ('MOBILE_MONEY');
+
+INSERT INTO "typeDepense" ("libelle") VALUES ('ACHAT_STOCKS'), ('CARBURANT'), ('REPARATION_TRUCK'), ('IMPREVUS_METEO'), ('REPAS_MIDI_CHEF');
+
+INSERT INTO "statutValidationAdmin" ("libelle") VALUES ('EN_ATTENTE'), ('VALIDE_ADMIN'), ('REFUSE_ADMIN');
+
+INSERT INTO "typeRetour" ("libelle") VALUES ('REMARQUE_AVIS'), ('DEMANDE_PRODUIT');
+
+INSERT INTO "classificationSentiment" ("libelle") VALUES ('POSITIF'), ('NEGATIF'), ('NEUTRE');
+
+INSERT INTO "statutDemandeAchat" ("libelle") VALUES ('NON_APPLICABLE'), ('DEMANDE_ACHAT_ENVOYEE_A_ADMIN'), ('APPROUVEE');
+
+INSERT INTO "typeNotification" ("libelle") VALUES ('BOOST_NOUVEAU_PRODUIT'), ('ARRIVEE_POINT_DE_VENTE');
+
+
+-- data1.sql
+INSERT INTO "produit" ("nomProduit", "prixBase") VALUES
+('Sandwich poulet', 5000.00),
+('Burger boeuf', 7000.00),
+('Hot dog', 4000.00),
+('Salade cesar', 5500.00),
+('Pizza fromage', 8000.00);
+
+INSERT INTO "ingredient" ("nomIngredient", "seuilAlerteQuantite", "uniteMesure") VALUES
+('Pain burger', 10.00, 'piece'),
+('Blanc de poulet', 5.00, 'kg'),
+('Steak boeuf', 5.00, 'kg'),
+('Salade verte', 3.00, 'kg'),
+('Tomate', 5.00, 'kg'),
+('Fromage râpé', 5.00, 'kg'),
+('Saucisse', 5.00, 'kg'),
+('Pâte à pizza', 10.00, 'piece'),
+('Sauce tomate', 5.00, 'L');
+
+INSERT INTO "recetteDeBase" ("idProduit", "idIngredient", "quantiteRecette") VALUES
+(1, 2, 0.200),
+(1, 4, 0.050),
+(1, 5, 0.050),
+(2, 1, 1.000),
+(2, 3, 0.150),
+(2, 6, 0.030),
+(3, 1, 1.000),
+(3, 7, 1.000),
+(4, 4, 0.100),
+(4, 5, 0.050),
+(5, 8, 1.000),
+(5, 9, 0.100),
+(5, 6, 0.100);
+
+INSERT INTO "itineraire" ("nomZone", "lieuExact", "heureDebutPrevue", "heureFinPrevue", "jourSemaine") VALUES
+('Analakely', 'Devant la gare', '11:00:00', '14:00:00', 'LUNDI'),
+('Ivandry', 'Pres du supermarché Leader Price', '17:00:00', '21:00:00', 'LUNDI'),
+('Antanimena', 'Devant l université', '11:00:00', '14:00:00', 'MARDI'),
+('Ankorondrano', 'Pres de Orange', '17:00:00', '21:00:00', 'MARDI'),
+('Isotry', 'Marche d Isotry', '11:00:00', '15:00:00', 'MERCREDI'),
+('Behoririka', 'Pres de la gare routière', '11:00:00', '14:00:00', 'JEUDI'),
+('Anosy', 'Pres du lac Anosy', '17:00:00', '21:00:00', 'JEUDI'),
+('Ambohijatovo', 'Devant la banque BNI', '11:00:00', '15:00:00', 'VENDREDI'),
+('Antaninandro', 'Pres du marché', '17:00:00', '21:00:00', 'VENDREDI'),
+('Ambodivona', 'Pres de Telma', '10:00:00', '14:00:00', 'SAMEDI');
+
+
+
+
+
+
+-- ajout de truck et user
+-- Se connecter à la base de données
+-- \c foodTruckDb;
+
+-- ========================================
+-- 1. INSERTION DES TRUCKS (2 camions)
+-- ========================================
+
+-- Insérer les 2 trucks avec des immatriculations uniques
+-- On suppose que vous avez des statuts : DISPONIBLE (id=1), EN_MAINTENANCE (id=2), PANNE (id=3)
+INSERT INTO "truck" ("immatriculation", "idStatutDisponibilite")
+VALUES 
+    ('AB-123-CD', 1),  -- Truck 1 : immatriculation AB-123-CD, statut DISPONIBLE
+    ('EF-456-GH', 1);  -- Truck 2 : immatriculation EF-456-GH, statut DISPONIBLE
+
+-- ========================================
+-- 2. INSERTION DES CHAUFFEURS (2 chauffeurs)
+-- ========================================
+
+-- Insérer 2 chauffeurs avec le rôle CHAUFFEUR (id=4)
+-- Les mots de passe sont encodés en BCrypt (exemple: "password123" encodé)
+INSERT INTO "utilisateur" (
+    "nom", 
+    "prenom", 
+    "email", 
+    "motDePasse", 
+    "idRole", 
+    "salaireBaseFixe", 
+    "statutActif"
+)
+VALUES 
+    (
+        'DUPONT', 
+        'Jean', 
+        'jean.dupont@example.com', 
+        'mdp1',  -- À remplacer par un vrai hash BCrypt
+        4,  -- CHAUFFEUR
+        2500.00, 
+        TRUE
+    ),
+    (
+        'MARTIN', 
+        'Marie', 
+        'marie.martin@example.com', 
+        'mdp2',  -- À remplacer par un vrai hash BCrypt
+        4,  -- CHAUFFEUR
+        2600.00, 
+        TRUE
+    );
+
+-- ========================================
+-- 3. VÉRIFICATION DES INSERTIONS
+-- ========================================
+
+-- Vérifier les trucks insérés
+SELECT * FROM "truck";
+
+-- Vérifier les chauffeurs insérés
+SELECT 
+    u."idUtilisateur",
+    u."nom",
+    u."prenom",
+    u."email",
+    r."libelle" AS "role",
+    u."salaireBaseFixe",
+    u."statutActif"
+FROM "utilisateur" u
+JOIN "role" r ON u."idRole" = r."idRole"
+WHERE r."libelle" = 'CHAUFFEUR';
