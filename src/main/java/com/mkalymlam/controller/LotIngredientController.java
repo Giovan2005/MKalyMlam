@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 
+import com.mkalymlam.entity.Ingredient;
 import com.mkalymlam.entity.LotIngredient;
 import com.mkalymlam.service.LotIngredientService;
 
@@ -26,16 +28,40 @@ public class LotIngredientController {
         this.service = service;
     }
 
+    @GetMapping("/new")
+    public String createForm(Model model) {
+        model.addAttribute("lot", new LotIngredient());
+        model.addAttribute("ingredients", service.getAllIngredients());
+        model.addAttribute("isEdit", false);
+        model.addAttribute("actionUrl", "/lot/save");
+        return "lot/form";
+    }
+
     @PostMapping("/save")
-    public LotIngredient save(@RequestBody LotIngredient lotIngredient) {
-        return service.save(lotIngredient);
+    public String save(@ModelAttribute LotIngredient lotIngredient) {
+        service.save(lotIngredient);
+        return "redirect:/lot/findAll";
     }
 
-    @PutMapping("/update/{id}")
-    public LotIngredient update(@PathVariable Long id, @RequestBody LotIngredient lotIngredient) {
-        return service.update(id, lotIngredient);
+    @GetMapping("/update/{id}")
+    public String editForm(@PathVariable Long id, Model model) {
+        LotIngredient lot = service.getById(id);
+        if (lot == null) {
+            return "redirect:/lot/findAll";
+        }
+        model.addAttribute("lot", lot);
+        model.addAttribute("ingredients", service.getAllIngredients());
+        model.addAttribute("isEdit", true);
+        model.addAttribute("actionUrl", "/lot/update/" + id);
+        return "lot/form";
     }
 
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute LotIngredient lotIngredient) {
+        service.update(id, lotIngredient);
+        return "redirect:/lot/findAll";
+    }
+    
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         service.deleteById(id);

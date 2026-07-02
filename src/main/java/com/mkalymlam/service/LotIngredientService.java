@@ -119,4 +119,8 @@ public class LotIngredientService {
         });
         return lots;
     }
+
+    public List<Ingredient> getAllIngredients() {
+        return ingredientRepository.findAll();
+    }
 }
