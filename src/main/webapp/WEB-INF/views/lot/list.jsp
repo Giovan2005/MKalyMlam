@@ -13,7 +13,7 @@
 
 <hr>
 
-<a href="${pageContext.request.contextPath}/itineraire/new">
+<a href="${pageContext.request.contextPath}/lot/save">
     Ajouter un lot
 </a>
 
@@ -45,7 +45,7 @@
 
                 <tr>
 
-                    <td>${lot.ingredient}</td>
+                    <td>${lot.ingredient.nomIngredient}</td>
                     <td>${lot.dateReception}</td>
                     <td>${lot.datePeremption}</td>
                     <td>${lot.quantiteInitiale}</td>
@@ -64,12 +64,13 @@
                               method="post"
                               style="display:inline;"
                               onsubmit="return confirm('Supprimer ce lot ?');">
-
-                            <button type="submit">
+                            
+                              <button type="submit">
                                 Supprimer
                             </button>
 
                         </form>
+
 
                     </td>
 

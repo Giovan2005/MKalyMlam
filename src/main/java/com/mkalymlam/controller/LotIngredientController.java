@@ -36,10 +36,10 @@ public class LotIngredientController {
         return service.update(id, lotIngredient);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         service.deleteById(id);
-        return "Lot supprimé";
+        return "redirect:/lot/findAll";
     }
 
     @GetMapping("/find")
