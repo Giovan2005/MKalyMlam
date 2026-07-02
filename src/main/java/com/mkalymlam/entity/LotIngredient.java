@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "\"lotIngredient\"")
@@ -39,6 +40,17 @@ public class LotIngredient {
 
     @Column(name = "\"prixAchatUnitaire\"")
     private Double prixAchatUnitaire;
+
+    @Transient  // Ne pas persister en base
+    private boolean alerte;
+    
+    public boolean isAlerte() {
+        return alerte;
+    }
+    
+    public void setAlerte(boolean alerte) {
+        this.alerte = alerte;
+    }
 
     public LotIngredient() {
     }

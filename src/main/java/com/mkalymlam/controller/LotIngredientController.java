@@ -36,10 +36,10 @@ public class LotIngredientController {
         return service.update(id, lotIngredient);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         service.deleteById(id);
-        return "Lot supprimé";
+        return "redirect:/lot/findAll";
     }
 
     @GetMapping("/find")
@@ -58,12 +58,14 @@ public class LotIngredientController {
 
     @GetMapping("/findAll")
     public String findAll(Model model) {
-        model.addAttribute("lots", service.getAll());
+        model.addAttribute("lots", service.getAllWithAlertStatus());
         return "lot/list";
     }
 
     @GetMapping("/alertes")
-    public List<LotIngredient> alertes() {
-        return service.getAlertLots();
+    public String alertes(Model model) {
+        List<LotIngredient> lots = service.getAlertLots();
+        model.addAttribute("lots", lots);
+        return "alertes/list";
     }
 }
