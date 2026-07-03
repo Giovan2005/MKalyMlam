@@ -1,6 +1,7 @@
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/MkalymlamApplication.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/CommandeController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/DashboardController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/EquipeSessionController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/IngredientController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/ItineraireController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/LigneCommandeController.java
@@ -12,6 +13,7 @@
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/VendeuseController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Commande.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/EquipeSession.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/EquipeSessionId.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Ingredient.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Itineraire.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/LigneCommande.java
@@ -37,6 +39,7 @@
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/StatutSessionRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/TruckRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/UtilisateurRepository.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/EquipeSessionService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/IngredientService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/ItineraireService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/ProduitService.java
