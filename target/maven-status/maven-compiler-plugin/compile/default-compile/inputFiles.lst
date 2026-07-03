@@ -9,6 +9,7 @@
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/RecetteBaseController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/SessionTruckController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueController.java
+/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueViewController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/TruckController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/VendeuseController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Commande.java
@@ -47,7 +48,6 @@
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/RecetteBaseService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/SessionTruckService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService1.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/TruckService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/VenteService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/view/ViewController.java
