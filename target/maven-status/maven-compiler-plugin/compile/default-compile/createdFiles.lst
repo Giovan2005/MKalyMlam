@@ -5,12 +5,15 @@ com/mkalymlam/view/ViewController.class
 com/mkalymlam/service/VenteService.class
 com/mkalymlam/entity/Utilisateur.class
 com/mkalymlam/service/ProduitService.class
+com/mkalymlam/service/StatutValidationService.class
 com/mkalymlam/MkalymlamApplication.class
 com/mkalymlam/service/StatistiqueService.class
+com/mkalymlam/entity/StatutValidation.class
 com/mkalymlam/controller/StatistiqueController.class
 com/mkalymlam/controller/ProduitController.class
 com/mkalymlam/entity/StatutDisponibilite.class
 com/mkalymlam/repository/StatutDisponibiliteRepository.class
+com/mkalymlam/service/DemandeChangementItineraireService.class
 com/mkalymlam/repository/TruckRepository.class
 com/mkalymlam/entity/Produit.class
 com/mkalymlam/repository/RecetteBaseRepository.class
@@ -29,7 +32,9 @@ com/mkalymlam/controller/VendeuseController.class
 com/mkalymlam/entity/Itineraire.class
 com/mkalymlam/entity/RecetteBase.class
 com/mkalymlam/entity/Commande.class
+com/mkalymlam/service/UtilisateurService.class
 com/mkalymlam/service/LotIngredientService.class
+com/mkalymlam/repository/StatutValidationRepository.class
 com/mkalymlam/controller/DashboardController.class
 com/mkalymlam/repository/ProduitRepository.class
 com/mkalymlam/repository/LigneCommandeRepository.class
@@ -41,7 +46,9 @@ com/mkalymlam/entity/EquipeSession.class
 com/mkalymlam/entity/SessionTruck.class
 com/mkalymlam/entity/Ingredient.class
 com/mkalymlam/service/RecetteBaseService.class
+com/mkalymlam/controller/DemandeChangementItineraireController.class
 com/mkalymlam/entity/StatutSession.class
+com/mkalymlam/repository/DemandeChangementItineraireRepository.class
 com/mkalymlam/repository/ItineraireRepository.class
 com/mkalymlam/repository/RoleRepository.class
 com/mkalymlam/controller/CommandeController.class
@@ -50,4 +57,5 @@ com/mkalymlam/service/TruckService.class
 com/mkalymlam/entity/LigneCommande.class
 com/mkalymlam/repository/EquipeSessionRepository.class
 com/mkalymlam/service/IngredientService.class
+com/mkalymlam/entity/DemandeChangementItineraire.class
 com/mkalymlam/repository/LotIngredientRepository.class

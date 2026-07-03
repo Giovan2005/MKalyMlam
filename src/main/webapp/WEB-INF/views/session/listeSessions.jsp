@@ -162,7 +162,7 @@
                                           style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;"
                                           onsubmit="return confirm('Êtes-vous sûr de vouloir clôturer cette session ?');">
 
-                                        <input type="hidden" name="idSession" value="${session.id}">
+                                        <input type="hidden" name="id" value="${session.id}">
 
                                         <input type="number" 
                                                name="fondDeCaisseCloture"

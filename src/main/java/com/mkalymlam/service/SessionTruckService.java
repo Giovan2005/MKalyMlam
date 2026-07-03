@@ -120,6 +120,10 @@ public class SessionTruckService {
         return sessionTruckRepository.findByDateSession(LocalDate.now());
     }
 
+    public List<SessionTruck> findAll() {
+        return sessionTruckRepository.findAll();
+    }
+
     private void saveChauffeur(SessionTruck sessionTruck, Utilisateur chauffeur) {
         Role roleChauffeur = roleRepository.findByLibelle(ROLE_CHAUFFEUR);
 
@@ -172,4 +176,10 @@ public class SessionTruckService {
         }
         return statutSession;
     }
+
+    public SessionTruck save(SessionTruck sessionTruck) {
+        return sessionTruckRepository.save(sessionTruck);
+    }
+
+
 }
