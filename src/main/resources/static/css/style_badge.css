@@ -1,0 +1,274 @@
+/* -- BADGES - Équivalent Bootstrap*/
+
+.badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    min-width: 60px;
+}
+
+/* Couleurs des badges */
+.bg-success {
+    color: #fff;
+    background-color: #198754;
+}
+
+.bg-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.bg-warning {
+    color: #000;
+    background-color: #ffc107;
+}
+
+.bg-info {
+    color: #fff;
+    background-color: #0dcaf0;
+}
+
+.bg-primary {
+    color: #fff;
+    background-color: #0d6efd;
+}
+
+.bg-secondary {
+    color: #fff;
+    background-color: #6c757d;
+}
+
+.bg-dark {
+    color: #fff;
+    background-color: #212529;
+}
+
+.bg-light {
+    color: #000;
+    background-color: #f8f9fa;
+}
+
+/* Texte sombre sur fond clair */
+.text-dark {
+    color: #212529 !important;
+}
+
+/* Version pill (arrondi) */
+.badge-pill {
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+}
+
+/* Badge avec icône */
+.badge i {
+    margin-right: 4px;
+}
+
+/*-- BADGES SPÉCIFIQUES POUR LES LOTS*/
+
+/* Statut OK */
+.badge-status-ok {
+    color: #fff;
+    background-color: #198754;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 0.375rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.badge-status-ok i {
+    margin-right: 4px;
+}
+
+/* Statut ALERTE (stock faible) */
+.badge-status-alert {
+    color: #000;
+    background-color: #ffc107;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 0.375rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.badge-status-alert i {
+    margin-right: 4px;
+}
+
+/* Statut ÉPUISÉ */
+.badge-status-out {
+    color: #fff;
+    background-color: #dc3545;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 0.375rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.badge-status-out i {
+    margin-right: 4px;
+}
+
+
+/* style filtre */
+/* Conteneur des filtres */
+.filters-container {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.filters-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+/* Groupe de filtre */
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+.filter-label i {
+    margin-right: 5px;
+    color: #6c757d;
+}
+
+/* Champ de recherche */
+.filter-input {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.filter-input:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Checkbox */
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-direction: row;
+}
+
+.filter-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.filter-checkbox-label {
+    font-size: 14px;
+    color: #495057;
+    cursor: pointer;
+}
+
+/* Boutons d'action */
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.btn-filter {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+    white-space: nowrap;
+}
+
+.btn-filter:hover {
+    background-color: #0056b3;
+}
+
+.btn-filter i {
+    margin-right: 5px;
+}
+
+.btn-filter-reset {
+    padding: 8px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+    white-space: nowrap;
+}
+
+.btn-filter-reset:hover {
+    background-color: #5a6268;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-filter-reset i {
+    margin-right: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filters-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        min-width: 100%;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-filter,
+    .btn-filter-reset {
+        width: 100%;
+        text-align: center;
+    }
+}

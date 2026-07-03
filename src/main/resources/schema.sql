@@ -110,6 +110,11 @@ CREATE TABLE "typeNotification" (
     "libelle" VARCHAR(50) NOT NULL
 );
 
+-- CREATE TABLE "zone" (
+--     "idZone" SERIAL PRIMARY KEY,
+--     "libelle" VARCHAR(50) NOT NULL
+-- );
+
 
 -- ==============================================================================
 -- MODULE 1 : Utilisateurs, Ressources Humaines & Paie
@@ -203,6 +208,17 @@ CREATE TABLE "itineraire" (
     "jourSemaine" VARCHAR(20) NOT NULL
 );
 
+-- CREATE TABLE "itineraire" (
+--     "idItineraire" SERIAL PRIMARY KEY,
+--     "idZone" INT,
+--     "lieuExact" TEXT NOT NULL,
+--     "heureDebutPrevue" TIME NOT NULL,
+--     "heureFinPrevue" TIME NOT NULL,
+--     "jourSemaine" VARCHAR(20) NOT NULL
+--     -- FOREIGN KEY ("idZone") REFERENCES "zone"("idZone"),
+
+-- );
+
 CREATE TABLE "sessionTruck" (
     "idSession" SERIAL PRIMARY KEY,
     "idTruck" INT NOT NULL,
@@ -219,11 +235,11 @@ CREATE TABLE "sessionTruck" (
 );
 
 CREATE TABLE "equipeSession" (
+    "idEquipeSession" SERIAL PRIMARY KEY,
     "idSession" INT NOT NULL,
     "idUtilisateur" INT NOT NULL,
     "idRoleDuJour" INT NOT NULL,
     "salaireJournalierRemplacant" NUMERIC(10, 2),
-    PRIMARY KEY ("idSession", "idUtilisateur"),
     FOREIGN KEY ("idSession") REFERENCES "sessionTruck"("idSession"),
     FOREIGN KEY ("idUtilisateur") REFERENCES "utilisateur"("idUtilisateur"),
     FOREIGN KEY ("idRoleDuJour") REFERENCES "role"("idRole")

@@ -49,6 +49,11 @@
         Ingrédients
     </a>
 
+    <a href="${pageContext.request.contextPath}/lot/findAll"
+    class="${activeMenu == 'lots' ? 'active' : ''}">
+        Lots
+    </a>
+
     <a href="${pageContext.request.contextPath}/recetteBase"
     class="${activeMenu == 'recetteBase' ? 'active' : ''}">
         Recette de Base
@@ -59,8 +64,8 @@
         Commandes
     </a>
 
-    <a href="${pageContext.request.contextPath}/statistiques"
-    class="${activeMenu == 'statistiques' ? 'active' : ''}">
+    <a href="${pageContext.request.contextPath}/statistique"
+    class="${activeMenu == 'statistique' ? 'active' : ''}">
         Statistiques
     </a>
 
@@ -74,7 +79,9 @@
         Employés
     </a>
 
-    
-
+    <a href="${pageContext.request.contextPath}/session/liste"
+    class="${activeMenu == 'sessions' ? 'active' : ''}">
+        Sessions
+    </a>
 
 </div>
