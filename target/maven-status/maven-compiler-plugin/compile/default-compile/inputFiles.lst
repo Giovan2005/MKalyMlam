@@ -4,6 +4,7 @@
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/IngredientController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/ItineraireController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/LigneCommandeController.java
+/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/LotIngredientController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/ProduitController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/RecetteBaseController.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/SessionTruckController.java
@@ -15,6 +16,7 @@
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Ingredient.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Itineraire.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/LigneCommande.java
+/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/LotIngredient.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Produit.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBase.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBaseId.java
@@ -29,6 +31,7 @@
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/IngredientRepository.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/ItineraireRepository.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/LigneCommandeRepository.java
+/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/LotIngredientRepository.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/ProduitRepository.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/RecetteBaseRepository.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/RoleRepository.java
@@ -39,6 +42,7 @@
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/UtilisateurRepository.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/IngredientService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/ItineraireService.java
+/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/LotIngredientService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/ProduitService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/RecetteBaseService.java
 /home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/SessionTruckService.java
