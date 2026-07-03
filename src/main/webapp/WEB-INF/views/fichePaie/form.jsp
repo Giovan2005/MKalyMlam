@@ -71,8 +71,12 @@
                     <small>Format attendu : année-mois.</small>
                 </div>
 
+                <div id="fichePaieInfo"
+                     style="display:none;margin:0 0 18px 0;padding:12px 14px;border-radius:10px;background:#fff7ed;color:#9a3412;border:1px solid #fdba74;font-weight:600;">
+                </div>
+
                 <div class="form-actions">
-                    <button type="submit" class="btn-success">
+                    <button type="submit" id="submitFichePaie" class="btn-success">
                         <i class="fas fa-bolt"></i>
                         Générer
                     </button>
@@ -93,6 +97,59 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function () {
+        const employeSelect = document.getElementById('idUtilisateur');
+        const moisInput = document.getElementById('moisAnnee');
+        const submitButton = document.getElementById('submitFichePaie');
+        const infoBox = document.getElementById('fichePaieInfo');
+        const checkUrl = '${pageContext.request.contextPath}/fiches-paie/exists';
+
+        function resetButton() {
+            submitButton.innerHTML = '<i class="fas fa-bolt"></i> Générer';
+            infoBox.style.display = 'none';
+            infoBox.textContent = '';
+        }
+
+        async function checkFichePaie() {
+            const idUtilisateur = employeSelect.value;
+            const moisAnnee = moisInput.value;
+
+            if (!idUtilisateur || !moisAnnee) {
+                resetButton();
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    checkUrl + '?idUtilisateur=' + encodeURIComponent(idUtilisateur) + '&moisAnnee=' + encodeURIComponent(moisAnnee)
+                );
+
+                if (!response.ok) {
+                    resetButton();
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (data.exists) {
+                    infoBox.textContent = 'Une fiche de paie existe déjà pour cet employé sur ce mois.';
+                    infoBox.style.display = 'block';
+                    submitButton.innerHTML = '<i class="fas fa-rotate"></i> Régénérer';
+                } else {
+                    resetButton();
+                }
+            } catch (error) {
+                resetButton();
+            }
+        }
+
+        employeSelect.addEventListener('change', checkFichePaie);
+        moisInput.addEventListener('change', checkFichePaie);
+        moisInput.addEventListener('input', checkFichePaie);
+    })();
+</script>
 
 </body>
 </html>

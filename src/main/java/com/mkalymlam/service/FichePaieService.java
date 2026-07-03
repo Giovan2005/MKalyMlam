@@ -3,6 +3,7 @@ package com.mkalymlam.service;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,14 @@ public class FichePaieService {
         }
         return fichePaieRepository.findById(idFiche)
                 .orElseThrow(() -> new IllegalArgumentException("Fiche de paie " + idFiche + " introuvable"));
+    }
+
+    public Optional<FichePaie> findExisting(Long idUtilisateur, String moisAnnee) {
+        if (idUtilisateur == null || moisAnnee == null || moisAnnee.isBlank()) {
+            return Optional.empty();
+        }
+
+        return fichePaieRepository.findByUtilisateur_IdAndMoisAnnee(idUtilisateur, moisAnnee);
     }
 
     @Transactional

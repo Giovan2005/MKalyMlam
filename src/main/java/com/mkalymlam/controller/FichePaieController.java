@@ -1,6 +1,8 @@
 package com.mkalymlam.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mkalymlam.entity.FichePaie;
@@ -36,6 +39,15 @@ public class FichePaieController {
         model.addAttribute("fichePaie", new FichePaie());
         model.addAttribute("utilisateurs", fichePaieService.findEmployes());
         return "fichePaie/form";
+    }
+
+    @GetMapping("/exists")
+    @ResponseBody
+    public Map<String, Object> exists(@RequestParam Long idUtilisateur,
+                                      @RequestParam String moisAnnee) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("exists", fichePaieService.findExisting(idUtilisateur, moisAnnee).isPresent());
+        return response;
     }
 
     @PostMapping("/generate")
