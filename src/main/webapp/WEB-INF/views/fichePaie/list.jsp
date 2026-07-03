@@ -39,9 +39,41 @@
                     Fiches de paie
                 </h1>
 
-                <a href="${pageContext.request.contextPath}/fiches-paie/new" class="btn-add">
-                    Générer une fiche de paie
-                </a>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                    <c:url var="csvExportUrl" value="/fiches-paie/export/csv">
+                        <c:if test="${not empty selectedUtilisateur}">
+                            <c:param name="idUtilisateur" value="${selectedUtilisateur}" />
+                        </c:if>
+                        <c:if test="${not empty selectedMoisAnnee}">
+                            <c:param name="moisAnnee" value="${selectedMoisAnnee}" />
+                        </c:if>
+                    </c:url>
+
+                    <c:url var="pdfExportUrl" value="/fiches-paie/export/pdf">
+                        <c:if test="${not empty selectedUtilisateur}">
+                            <c:param name="idUtilisateur" value="${selectedUtilisateur}" />
+                        </c:if>
+                        <c:if test="${not empty selectedMoisAnnee}">
+                            <c:param name="moisAnnee" value="${selectedMoisAnnee}" />
+                        </c:if>
+                    </c:url>
+
+                    <a href="${csvExportUrl}" class="btn-secondary"
+                       style="height:44px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;">
+                        <i class="fas fa-file-csv"></i>
+                        CSV
+                    </a>
+
+                    <a href="${pdfExportUrl}" class="btn-secondary"
+                       style="height:44px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF
+                    </a>
+
+                    <a href="${pageContext.request.contextPath}/fiches-paie/new" class="btn-add">
+                        Générer une fiche de paie
+                    </a>
+                </div>
             </div>
 
             <form method="get"

@@ -38,7 +38,7 @@
                 </h1>
 
                 <p style="color:#6b7280;margin-bottom:30px;">
-                    Sélectionnez un employé ou gardez "Tous employe", puis choisissez un mois. Le montant brut sera repris automatiquement depuis le salaire de base fixe.
+                    Sélectionnez un employé ou gardez "Tous les employés", puis choisissez un mois. Le montant brut sera repris automatiquement depuis le salaire de base fixe.
                 </p>
 
                 <hr style="border:none;border-top:1px solid var(--gray);margin:20px 0;">
@@ -50,7 +50,7 @@
                     </label>
 
                     <select name="idUtilisateur" id="idUtilisateur">
-                        <option value="" selected>Tous employe</option>
+                        <option value="" selected>Tous les employés</option>
                         <c:forEach items="${utilisateurs}" var="utilisateur">
                             <option value="${utilisateur.id}">
                                 ${utilisateur.nom} ${utilisateur.prenom} - ${utilisateur.salaireBaseFixe}
