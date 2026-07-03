@@ -1,8 +1,10 @@
 package com.mkalymlam.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mkalymlam.entity.Commande;
 import com.mkalymlam.entity.LigneCommande;
@@ -34,13 +36,33 @@ public class VenteService {
     public LigneCommande ajouterLigneCommande(LigneCommande ligne) {
         Produit produit = produitRepository.findById(ligne.getIdProduit())
                 .orElseThrow(() -> new RuntimeException("Produit introuvable"));
-        double sousTotal = produit.getPrixBase() * ligne.getQuantite();
-        ligne.setSousTotal(sousTotal);
+        double montant = produit.getPrixBase() * ligne.getQuantite();
+        ligne.setPrixUnitaireFacture(montant);
+        ligne.setSousTotal(montant);
         LigneCommande saved = ligneCommandeRepository.save(ligne);
 
         recalculerMontantCommande(ligne.getIdCommande());
 
         return saved;
+    }
+
+    @Transactional
+    public Commande validerCommande(Long idCommande, List<LigneCommande> lignes) {
+        Commande commande = getCommande(idCommande);
+
+        double total = commande.getMontantTotal();
+        for (LigneCommande ligne : lignes) {
+            Produit produit = produitRepository.findById(ligne.getIdProduit())
+                    .orElseThrow(() -> new RuntimeException("Produit introuvable"));
+            ligne.setIdCommande(idCommande);
+            double montant = produit.getPrixBase() * ligne.getQuantite();
+            ligne.setPrixUnitaireFacture(montant);
+            ligneCommandeRepository.save(ligne);
+            total += montant;
+        }
+
+        commande.setMontantTotal(total);
+        return commandeRepository.save(commande);
     }
 
     public double getMontantLignes(Long idCommande) {

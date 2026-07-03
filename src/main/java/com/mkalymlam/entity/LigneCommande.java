@@ -26,7 +26,8 @@ public class LigneCommande {
     private Long idProduit;
     @Column(name = "quantite")
     private int quantite;
-    // @Column(name = "\"sousTotal\"")
+    @Column(name = "\"prixUnitaireFacture\"", nullable = false)
+    private double prixUnitaireFacture;
     @Transient
     private double sousTotal;
 
@@ -63,6 +64,14 @@ public class LigneCommande {
 
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+
+    public double getPrixUnitaireFacture() {
+        return prixUnitaireFacture;
+    }
+
+    public void setPrixUnitaireFacture(double prixUnitaireFacture) {
+        this.prixUnitaireFacture = prixUnitaireFacture;
     }
 
     public double getSousTotal() {
