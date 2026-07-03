@@ -44,6 +44,39 @@
                 </a>
             </div>
 
+            <form method="get"
+                  action="${pageContext.request.contextPath}/fiches-paie"
+                  style="display:grid;grid-template-columns:1.2fr 1fr auto auto;gap:14px;align-items:end;margin-bottom:20px;padding:16px 18px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;">
+
+                <div class="form-group" style="margin-bottom:0;">
+                    <label for="idUtilisateur">Employé</label>
+                    <select id="idUtilisateur" name="idUtilisateur">
+                        <option value="">Tous les employés</option>
+                        <c:forEach items="${employes}" var="utilisateur">
+                            <option value="${utilisateur.id}" <c:if test="${selectedUtilisateur == utilisateur.id}">selected</c:if>>
+                                ${utilisateur.nom} ${utilisateur.prenom}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom:0;">
+                    <label for="moisAnnee">Mois</label>
+                    <input type="month" id="moisAnnee" name="moisAnnee" value="${selectedMoisAnnee}">
+                </div>
+
+                <button type="submit" class="btn-success" style="height:44px;">
+                    <i class="fas fa-filter"></i>
+                    Filtrer
+                </button>
+
+                <a href="${pageContext.request.contextPath}/fiches-paie"
+                   class="btn-secondary"
+                   style="height:44px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;">
+                    Réinitialiser
+                </a>
+            </form>
+
             <table>
                 <thead>
                 <tr>

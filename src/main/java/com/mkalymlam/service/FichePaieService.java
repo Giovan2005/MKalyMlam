@@ -29,6 +29,27 @@ public class FichePaieService {
         return fichePaieRepository.findAll();
     }
 
+    public List<FichePaie> findFiltered(Long idUtilisateur, String moisAnnee) {
+        boolean hasEmploye = idUtilisateur != null;
+        boolean hasMois = moisAnnee != null && !moisAnnee.isBlank();
+
+        if (hasEmploye && hasMois) {
+            return fichePaieRepository.findByUtilisateur_IdAndMoisAnnee(idUtilisateur, moisAnnee)
+                    .map(List::of)
+                    .orElseGet(List::of);
+        }
+
+        if (hasEmploye) {
+            return fichePaieRepository.findByUtilisateur_Id(idUtilisateur);
+        }
+
+        if (hasMois) {
+            return fichePaieRepository.findByMoisAnnee(moisAnnee);
+        }
+
+        return findAll();
+    }
+
     public List<Utilisateur> findEmployes() {
         return utilisateurRepository.findAll().stream()
                 .filter(utilisateur -> utilisateur.getSalaireBaseFixe() != null)

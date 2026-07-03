@@ -29,8 +29,12 @@ public class FichePaieController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("fichesPaie", fichePaieService.findAll());
+    public String list(Model model,
+                       @RequestParam(required = false) Long idUtilisateur,
+                       @RequestParam(required = false) String moisAnnee) {
+        model.addAttribute("fichesPaie", fichePaieService.findFiltered(idUtilisateur, moisAnnee));
+        model.addAttribute("selectedUtilisateur", idUtilisateur);
+        model.addAttribute("selectedMoisAnnee", moisAnnee);
         return "fichePaie/list";
     }
 
