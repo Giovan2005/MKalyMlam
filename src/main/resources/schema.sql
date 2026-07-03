@@ -379,8 +379,8 @@ CREATE TABLE "ligneCommande" (
     FOREIGN KEY ("idProduit") REFERENCES "produit"("idProduit")
 );
 
--- ALTER TABLE "ligneCommande"
--- ALTER COLUMN "prixUnitaireFacture" DROP NOT NULL;
+ALTER TABLE "ligneCommande"
+ALTER COLUMN "prixUnitaireFacture" DROP NOT NULL;
 
 CREATE TABLE "personnalisationCommande" (
     "idPersonnalisation" SERIAL PRIMARY KEY,
