@@ -55,9 +55,16 @@ public class FichePaieController {
     }
 
     @PostMapping("/generate")
-    public String generate(@RequestParam Long idUtilisateur,
+    public String generate(@RequestParam(required = false) Long idUtilisateur,
                            @RequestParam String moisAnnee,
                            RedirectAttributes redirectAttributes) {
+        if (idUtilisateur == null) {
+            List<FichePaie> fichesPaie = fichePaieService.genererTous(moisAnnee);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    fichesPaie.size() + " fiche(s) de paie generee(s) ou regeneree(s) pour le mois " + moisAnnee);
+            return "redirect:/fiches-paie?moisAnnee=" + moisAnnee;
+        }
+
         FichePaie fichePaie = fichePaieService.generer(idUtilisateur, moisAnnee);
         redirectAttributes.addFlashAttribute("successMessage",
                 "Fiche de paie generee pour "

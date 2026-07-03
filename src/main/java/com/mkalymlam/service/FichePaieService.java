@@ -77,22 +77,39 @@ public class FichePaieService {
         if (idUtilisateur == null) {
             throw new IllegalArgumentException("Employe obligatoire");
         }
+        validerMoisAnnee(moisAnnee);
+
+        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
+                .orElseThrow(() -> new IllegalArgumentException("Employe " + idUtilisateur + " introuvable"));
+
+        return genererPourUtilisateur(utilisateur, moisAnnee);
+    }
+
+    @Transactional
+    public List<FichePaie> genererTous(String moisAnnee) {
+        validerMoisAnnee(moisAnnee);
+
+        return findEmployes().stream()
+                .map(utilisateur -> genererPourUtilisateur(utilisateur, moisAnnee))
+                .toList();
+    }
+
+    private void validerMoisAnnee(String moisAnnee) {
         if (moisAnnee == null || moisAnnee.isBlank()) {
             throw new IllegalArgumentException("Mois et annee obligatoires");
         }
 
         YearMonth.parse(moisAnnee);
+    }
 
-        Utilisateur utilisateur = utilisateurRepository.findById(idUtilisateur)
-                .orElseThrow(() -> new IllegalArgumentException("Employe " + idUtilisateur + " introuvable"));
-
+    private FichePaie genererPourUtilisateur(Utilisateur utilisateur, String moisAnnee) {
         Double salaireBaseFixe = utilisateur.getSalaireBaseFixe();
         if (salaireBaseFixe == null) {
             throw new IllegalArgumentException("L'employe selectionne n'a pas de salaire de base fixe");
         }
 
         FichePaie fichePaie = fichePaieRepository
-                .findByUtilisateur_IdAndMoisAnnee(idUtilisateur, moisAnnee)
+                .findByUtilisateur_IdAndMoisAnnee(utilisateur.getId(), moisAnnee)
                 .orElseGet(FichePaie::new);
 
         fichePaie.setUtilisateur(utilisateur);

@@ -38,7 +38,7 @@
                 </h1>
 
                 <p style="color:#6b7280;margin-bottom:30px;">
-                    Sélectionnez un employé et un mois. Le montant brut sera repris automatiquement depuis son salaire de base fixe.
+                    Sélectionnez un employé ou gardez "Tous employe", puis choisissez un mois. Le montant brut sera repris automatiquement depuis le salaire de base fixe.
                 </p>
 
                 <hr style="border:none;border-top:1px solid var(--gray);margin:20px 0;">
@@ -46,11 +46,11 @@
 
                 <div class="form-group">
                     <label for="idUtilisateur">
-                        Employé <span class="required-star">*</span>
+                        Employé
                     </label>
 
-                    <select name="idUtilisateur" id="idUtilisateur" required>
-                        <option value="">-- Choisir un employé --</option>
+                    <select name="idUtilisateur" id="idUtilisateur">
+                        <option value="" selected>Tous employe</option>
                         <c:forEach items="${utilisateurs}" var="utilisateur">
                             <option value="${utilisateur.id}">
                                 ${utilisateur.nom} ${utilisateur.prenom} - ${utilisateur.salaireBaseFixe}
@@ -116,8 +116,15 @@
             const idUtilisateur = employeSelect.value;
             const moisAnnee = moisInput.value;
 
-            if (!idUtilisateur || !moisAnnee) {
+            if (!moisAnnee) {
                 resetButton();
+                return;
+            }
+
+            if (!idUtilisateur) {
+                infoBox.textContent = 'Toutes les fiches de paie des employés seront générées ou régénérées pour ce mois.';
+                infoBox.style.display = 'block';
+                submitButton.innerHTML = '<i class="fas fa-bolt"></i> Générer pour tous';
                 return;
             }
 
