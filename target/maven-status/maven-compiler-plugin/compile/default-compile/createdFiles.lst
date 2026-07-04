@@ -1,7 +1,6 @@
 com/mkalymlam/controller/DashboardController.class
 com/mkalymlam/repository/ProduitRepository.class
 com/mkalymlam/repository/LigneCommandeRepository.class
-com/mkalymlam/controller/StatistiqueViewController.class
 com/mkalymlam/entity/RecetteBaseId.class
 com/mkalymlam/repository/CommandeRepository.class
 com/mkalymlam/repository/IngredientRepository.class

@@ -398,6 +398,80 @@ public class StatistiqueService {
         return executeStatQuery(sql.toString(), params.toArray());
     }
 
+    // Correspondance entre la granularité choisie côté front (en français)
+    // et le premier argument attendu par date_trunc() en PostgreSQL.
+    private static final Map<String, String> GRANULARITE_POSTGRES = Map.of(
+        "jour", "day",
+        "semaine", "week",
+        "mois", "month"
+    );
+
+    /**
+     * Données du graphique groupées par jour, semaine ou mois (boutons
+     * Journalier / Hebdomadaire / Mensuel). "granularite" attendu :
+     * "jour" (défaut), "semaine" ou "mois" ; toute autre valeur retombe sur "jour".
+     * Le champ passé à date_trunc() est un simple paramètre lié (?), donc
+     * aucun risque d'injection même s'il vient directement du front.
+     */
+    public List<Map<String, Object>> getDonneesGraphique(LocalDate dateDebut, LocalDate dateFin, String granularite) {
+        String champ = GRANULARITE_POSTGRES.getOrDefault(granularite, "day");
+        if ("day".equals(champ)) {
+            return getDonneesGraphique(dateDebut, dateFin);
+        }
+
+        // "champ" vient uniquement de GRANULARITE_POSTGRES (valeurs fixes :
+        // "week" ou "month" à ce stade) : l'insérer directement dans le texte
+        // SQL est donc sans risque d'injection. On évite volontairement de le
+        // passer en paramètre lié ("?") : PostgreSQL/JDBC n'arrive pas
+        // toujours à déterminer le type attendu pour le 1er argument de
+        // date_trunc() quand c'est un paramètre plutôt qu'un littéral, ce qui
+        // provoquait l'erreur 500 sur Hebdomadaire/Mensuel.
+        List<Object> params = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("""
+                    SELECT
+                        COALESCE(rev."periode", dep."periode") AS "periode",
+                        COALESCE(rev."chiffreAffaire", 0) AS "chiffreAffaire",
+                        COALESCE(rev."chiffreAffaire", 0) - COALESCE(dep."montantDepense", 0) AS "benefice"
+                    FROM (
+                        SELECT date_trunc('%1$s', "dateSession")::date AS "periode", SUM("chiffreAffaireTotal") AS "chiffreAffaire"
+                        FROM "sessionTruck"
+                        WHERE 1=1
+                """.formatted(champ));
+        if (dateDebut != null) {
+            sql.append(" AND \"dateSession\" >= ?");
+            params.add(dateDebut);
+        }
+        if (dateFin != null) {
+            sql.append(" AND \"dateSession\" < ?");
+            params.add(dateFin.plusDays(1));
+        }
+        sql.append(" GROUP BY date_trunc('%1$s', \"dateSession\")".formatted(champ));
+
+        sql.append("""
+                    ) rev
+                    FULL JOIN (
+                        SELECT date_trunc('%1$s', "dateDepense")::date AS "periode", SUM("montantDepense") AS "montantDepense"
+                        FROM "depense"
+                        WHERE 1=1
+                """.formatted(champ));
+        if (dateDebut != null) {
+            sql.append(" AND \"dateDepense\" >= ?");
+            params.add(dateDebut);
+        }
+        if (dateFin != null) {
+            sql.append(" AND \"dateDepense\" < ?");
+            params.add(dateFin.plusDays(1));
+        }
+        sql.append(" GROUP BY date_trunc('%1$s', \"dateDepense\")".formatted(champ));
+
+        sql.append("""
+                    ) dep ON dep."periode" = rev."periode"
+                    ORDER BY "periode"
+                """);
+
+        return executeStatQuery(sql.toString(), params.toArray());
+    }
+
     /**
      * Liste des zones distinctes (table "itineraire"), pour peupler le filtre zone.
      */
@@ -413,31 +487,35 @@ public class StatistiqueService {
 
     /**
      * Chiffre d'affaires groupé par zone, en une seule requête :
-     * SessionTruck -> Itineraire (nomZone) -> Commande (montantTotal).
-     * dateDebut/dateFin (optionnels) filtrent sur "sessionTruck"."dateSession".
+     * Itineraire (nomZone) -> SessionTruck -> Commande (montantTotal).
+     * On part de "itineraire" en LEFT JOIN pour que les zones sans session
+     * ou sans commande apparaissent quand même avec 0 Ar (plutôt que de
+     * disparaître complètement du résultat).
+     * dateDebut/dateFin (optionnels) filtrent sur "sessionTruck"."dateSession",
+     * appliqué dans le ON du LEFT JOIN pour ne pas exclure les zones vides.
      */
     public List<Map<String, Object>> getChiffreAffaireParZoneGroupe(LocalDate dateDebut, LocalDate dateFin) {
-        StringBuilder sql = new StringBuilder("""
-            SELECT i."nomZone" AS "zone", COALESCE(SUM(c."montantTotal"),0) AS "chiffreAffaire"
-            FROM "sessionTruck" st
-            JOIN "itineraire" i ON i."idItineraire" = st."idItineraire"
-            LEFT JOIN "commande" c ON c."idSession" = st."idSession"
-            WHERE 1=1
-            """);
+        StringBuilder sessionJoin = new StringBuilder(
+            "LEFT JOIN \"sessionTruck\" st ON st.\"idItineraire\" = i.\"idItineraire\""
+        );
         List<Object> params = new ArrayList<>();
         if (dateDebut != null) {
-            sql.append(" AND st.\"dateSession\" >= ?");
+            sessionJoin.append(" AND st.\"dateSession\" >= ?");
             params.add(dateDebut);
         }
         if (dateFin != null) {
-            sql.append(" AND st.\"dateSession\" < ?");
+            sessionJoin.append(" AND st.\"dateSession\" < ?");
             params.add(dateFin.plusDays(1));
         }
-        sql.append("""
+        String sql = """
+            SELECT i."nomZone" AS "zone", COALESCE(SUM(c."montantTotal"),0) AS "chiffreAffaire"
+            FROM "itineraire" i
+            %s
+            LEFT JOIN "commande" c ON c."idSession" = st."idSession"
             GROUP BY i."nomZone"
             ORDER BY i."nomZone"
-            """);
-        return executeStatQuery(sql.toString(), params.toArray());
+            """.formatted(sessionJoin);
+        return executeStatQuery(sql, params.toArray());
     }
 
     /**

@@ -9,99 +9,126 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Controller;
 
 import com.mkalymlam.service.StatistiqueService;
 
-@RestController
-@RequestMapping("/statistiques")
+// Même pattern que ProduitController / IngredientController : un seul
+// @Controller, la page HTML dans une méthode normale (retourne le nom de vue),
+// et les endpoints JSON annotés @ResponseBody. Plus de StatistiqueViewController
+// séparé : tout est ici, comme pour toutes les autres pages de l'appli.
+@Controller
 public class StatistiqueController {
 
     @Autowired
     private StatistiqueService statistiqueService;
 
-    @GetMapping("/chiffreAffaire")
+    // ----------------------------------------------------------------
+    // Page HTML
+    // ----------------------------------------------------------------
+
+    @GetMapping("/statistique")
+    public String index() {
+        return "statistique/index";
+    }
+
+    // ----------------------------------------------------------------
+    // Endpoints JSON (préfixe /statistiques, comme avant)
+    // ----------------------------------------------------------------
+
+    @GetMapping("/statistiques/chiffreAffaire")
+    @ResponseBody
     public Double chiffreAffaire(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
         return statistiqueService.getChiffreAffaireGlobal(dateDebut, dateFin);
     }
 
-    @GetMapping("/benefice")
+    @GetMapping("/statistiques/benefice")
+    @ResponseBody
     public Double benefice(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
         return statistiqueService.getBeneficeTotal(dateDebut, dateFin);
     }
 
-    @GetMapping("/benefice/{idItineraire}")
+    @GetMapping("/statistiques/benefice/{idItineraire}")
+    @ResponseBody
     public Double beneficeParItineraire(@PathVariable Long idItineraire) {
         return statistiqueService.getBeneficeByIdItineraire(idItineraire);
     }
 
-    @GetMapping("/graphique")
+    // Ajout du paramètre "granularite" (jour/semaine/mois) pour les boutons
+    // Journalier / Hebdomadaire / Mensuel du front. Par défaut "jour", donc
+    // un appel sans ce paramètre se comporte exactement comme avant.
+    @GetMapping("/statistiques/graphique")
+    @ResponseBody
     public List<Map<String, Object>> graphique(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
-        return statistiqueService.getDonneesGraphique(dateDebut, dateFin);
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin,
+            @RequestParam(required = false, defaultValue = "jour") String granularite) {
+        return statistiqueService.getDonneesGraphique(dateDebut, dateFin, granularite);
     }
 
-    @GetMapping("chiffreAffaire/parSession/{idSession}")
+    @GetMapping("/statistiques/chiffreAffaire/parSession/{idSession}")
+    @ResponseBody
     public Double chifferAffaireParSession(@PathVariable Long idSession) {
         return statistiqueService.getChiffreAffaireByIdSession(idSession);
     }
 
-    @GetMapping("/chiffreAffaire/parZone/{nomZone}")
+    @GetMapping("/statistiques/chiffreAffaire/parZone/{nomZone}")
+    @ResponseBody
     public Double chifferAffaireParZone(@PathVariable String nomZone) {
         return statistiqueService.getChiffreAffaireByZone(nomZone);
     }
 
-    @GetMapping("chiffreAffaire/parSession/hebdomadaire/{idSession}")
+    @GetMapping("/statistiques/chiffreAffaire/parSession/hebdomadaire/{idSession}")
+    @ResponseBody
     public Double chifferAffaireParSessionHebdomadaire(@PathVariable Long idSession) {
         return statistiqueService.getChiffreAffaireByIdSessionHebdomadaire(idSession);
     }
 
-    @GetMapping("chiffreAffaire/parSession/{idSession}/{date1}/{date2}")
-    public Double chifferAffaireParSession2Dates(@PathVariable Long idSession, @PathVariable LocalDateTime date1, @PathVariable LocalDateTime date2) {
+    @GetMapping("/statistiques/chiffreAffaire/parSession/{idSession}/{date1}/{date2}")
+    @ResponseBody
+    public Double chifferAffaireParSession2Dates(
+            @PathVariable Long idSession,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date1,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date2) {
         return statistiqueService.getChiffreAffaireByIdSessionDates(idSession, date1, date2);
     }
 
-    @GetMapping("chiffreAffaire/parSession/mensuel/{idSession}")
+    @GetMapping("/statistiques/chiffreAffaire/parSession/mensuel/{idSession}")
+    @ResponseBody
     public Double chifferAffaireParSessionMensuel(@PathVariable Long idSession) {
         return statistiqueService.getChiffreAffaireByIdSessionMensuel(idSession);
     }
 
-    // ==================================================================
-    // AJOUTS - nécessaires pour le filtre par zone côté front.
-    // Aucun endpoint existant ci-dessus n'a été modifié.
-    // ==================================================================
-
-    // Liste des zones distinctes, pour peupler le <select> "Zone" du filtre
-    @GetMapping("/zones")
+    // Liste des zones distinctes. Pas utilisé par le front pour le moment
+    // (zone volontairement retirée de cette itération), gardé disponible.
+    @GetMapping("/statistiques/zones")
+    @ResponseBody
     public List<String> zones() {
         return statistiqueService.getZones();
     }
 
-    // Le service exposait déjà getBeneficeByZone() mais aucun endpoint ne
-    // l'appelait : on se contente de le brancher, sans toucher au service.
-    @GetMapping("/benefice/zone/{nomZone}")
+    @GetMapping("/statistiques/benefice/zone/{nomZone}")
+    @ResponseBody
     public Double beneficeParZone(@PathVariable String nomZone) {
         return statistiqueService.getBeneficeByZone(nomZone);
     }
 
-    // Endpoint demandé par le cahier des charges : toutes les zones en une
-    // seule requête groupée (SessionTruck -> Itineraire -> Commande),
-    // avec filtre de dates optionnel. Coexiste avec /parZone/{nomZone}.
-    @GetMapping("/chiffreAffaire/parZone")
+    @GetMapping("/statistiques/chiffreAffaire/parZone")
+    @ResponseBody
     public List<Map<String, Object>> chiffreAffaireParZoneGroupe(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
         return statistiqueService.getChiffreAffaireParZoneGroupe(dateDebut, dateFin);
     }
 
-    @GetMapping("/benefice/parZone")
+    @GetMapping("/statistiques/benefice/parZone")
+    @ResponseBody
     public List<Map<String, Object>> beneficeParZoneGroupe(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
