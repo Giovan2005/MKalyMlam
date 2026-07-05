@@ -68,7 +68,6 @@
 		</dependency>
 
 
-
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -106,6 +105,14 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency> -->
+
+  <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-crypto</artifactId>
+    </dependency>
+
+
+
 	</dependencies>
 
 	<build>

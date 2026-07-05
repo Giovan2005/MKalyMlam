@@ -78,10 +78,16 @@
     class="${activeMenu == 'employes' ? 'active' : ''}">
         Employés
     </a>
+        
 
-    <a href="${pageContext.request.contextPath}/session/liste"
-    class="${activeMenu == 'sessions' ? 'active' : ''}">
-        Sessions
+    <a href="${pageContext.request.contextPath}/conges"
+        class="${activeMenu == 'conges' ? 'active' : ''}">
+        Congés & Absences
     </a>
+    <a href="${pageContext.request.contextPath}/conges/demande"
+        class="${activeMenu == 'conges' ? 'active' : ''}">
+        <i class="fas fa-plus-circle"></i> Demande de congé
+    </a>
+
 
 </div>
