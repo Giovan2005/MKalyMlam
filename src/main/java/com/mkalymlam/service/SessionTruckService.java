@@ -60,7 +60,7 @@ public class SessionTruckService {
                                Double fondDeCaisseOuverture) {
         Truck truck = findTruck(idTruck);
         Itineraire itineraire = findItineraire(idItineraire);
-        Utilisateur chauffeur = findUtilisateur(idChauffeur);
+        Utilisateur chauffeur = findUtilisateur(idChauffeur.intValue());
         StatutSession statutOuverte = findStatutSession(STATUT_OUVERTE);
 
         String statutTruck = truck.getStatutDisponibilite() != null
@@ -155,7 +155,7 @@ public class SessionTruckService {
         return itineraireRepository.findById(idItineraire).orElse(null);
     }
 
-    private Utilisateur findUtilisateur(Long idUtilisateur) {
+    private Utilisateur findUtilisateur(Integer idUtilisateur) {
         if (idUtilisateur == null) {
             throw new IllegalArgumentException("Id chauffeur null");
         }
