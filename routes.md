@@ -1,0 +1,6 @@
+- GET `/fiches-paie`
+- GET `/fiches-paie/new`
+- GET `/fiches-paie/exists`
+- POST `/fiches-paie/generate`
+- GET `/fiches-paie/export/csv`
+- GET `/fiches-paie/export/pdf`

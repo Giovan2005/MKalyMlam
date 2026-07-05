@@ -89,5 +89,9 @@
         <i class="fas fa-plus-circle"></i> Demande de congé
     </a>
 
+    <a href="${pageContext.request.contextPath}/fiches-paie"
+    class="${activeMenu == 'fiches-paie' ? 'active' : ''}">
+        Fiches de paie
+    </a>
 
 </div>
