@@ -78,7 +78,7 @@
                     <select id="idChauffeur" name="idChauffeur" required>
                         <option value="">-- Sélectionner un chauffeur --</option>
                         <c:forEach items="${chauffeurs}" var="chauffeur">
-                            <option value="${chauffeur.id}">${chauffeur.prenom} ${chauffeur.nom}</option>
+                            <option value="${chauffeur.idUtilisateur}">${chauffeur.prenom} ${chauffeur.nom}</option>
                         </c:forEach>
                     </select>
                 </div>

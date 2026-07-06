@@ -14,6 +14,7 @@ com/mkalymlam/controller/StatistiqueController.class
 com/mkalymlam/controller/ProduitController.class
 com/mkalymlam/entity/StatutDisponibilite.class
 com/mkalymlam/repository/StatutDisponibiliteRepository.class
+com/mkalymlam/controller/VendeuseController$FactureStatique.class
 com/mkalymlam/repository/TruckRepository.class
 com/mkalymlam/entity/Produit.class
 com/mkalymlam/repository/RecetteBaseRepository.class
