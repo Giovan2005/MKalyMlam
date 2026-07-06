@@ -173,4 +173,10 @@ public class SessionTruckService {
         }
         return statutSession;
     }
+
+    public SessionTruck save(SessionTruck sessionTruck) {
+        return sessionTruckRepository.save(sessionTruck);
+    }
+
+
 }
