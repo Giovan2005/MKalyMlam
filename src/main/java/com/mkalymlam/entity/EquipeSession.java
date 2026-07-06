@@ -1,28 +1,27 @@
 package com.mkalymlam.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "\"equipeSession\"")
 public class EquipeSession {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "\"idEquipeSession\"")
-    private Long idEquipeSession;
+    @EmbeddedId
+    private EquipeSessionId id;
 
     @ManyToOne
+    @MapsId("idSession")
     @JoinColumn(name = "\"idSession\"")
     private SessionTruck sessionTruck;
 
     @ManyToOne
+    @MapsId("idUtilisateur")
     @JoinColumn(name = "\"idUtilisateur\"")
     private Utilisateur utilisateur;
 
@@ -36,12 +35,12 @@ public class EquipeSession {
     public EquipeSession() {
     }
 
-    public Long getIdEquipeSession() {
-        return idEquipeSession;
+    public EquipeSessionId getId() {
+        return id;
     }
 
-    public void setIdEquipeSession(Long idEquipeSession) {
-        this.idEquipeSession = idEquipeSession;
+    public void setId(EquipeSessionId id) {
+        this.id = id;
     }
 
     public SessionTruck getSessionTruck() {

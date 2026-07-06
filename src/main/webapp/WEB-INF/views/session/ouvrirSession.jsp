@@ -18,7 +18,7 @@
 <div class="dashboard">
     <c:set var="activeMenu" value="sessionTruck"/>
 
-    <!-- Sidebar -->
+
     <jsp:include page="/WEB-INF/views/fragments/sidebar.jsp" />
 
     <div class="main">

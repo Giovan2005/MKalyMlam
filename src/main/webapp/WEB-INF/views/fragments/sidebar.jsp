@@ -94,4 +94,9 @@
         Fiches de paie
     </a>
 
+    <a href="${pageContext.request.contextPath}/equipe/list_equipe"
+    class="${activeMenu == 'equipe' ? 'active' : ''}">
+        Équipe
+    </a>
+
 </div>

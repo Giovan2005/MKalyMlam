@@ -63,7 +63,6 @@
                 <thead>
 
                 <tr>
-                    <th><i class="fas fa-hashtag"></i> ID</th>
                     <th><i class="fas fa-truck"></i> Camion</th>
                     <th><i class="fas fa-user"></i> Chauffeur</th>
                     <th><i class="fas fa-route"></i> Itinéraire</th>
@@ -108,13 +107,6 @@
                 <c:forEach var="session" items="${sessions}" varStatus="loop">
 
                     <tr>
-
-                        <td>
-                            <span class="badge badge-id">
-                                ${session.id}
-                            </span>
-                        </td>
-
                         <td>
                             <strong>${session.truck.immatriculation}</strong>
                         </td>
