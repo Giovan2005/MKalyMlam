@@ -78,7 +78,7 @@
                                         onchange="toggleSalaryVisibility(this)">
                                     <option value="0">Selectionner un employé</option>
                                     <c:forEach items="${utilisateurs}" var="user">
-                                        <option value="${user.id}" data-role="${user.role.libelle}">
+                                        <option value="${user.idUtilisateur}" data-role="">
                                             ${user.prenom} ${user.nom}
                                         </option>
                                     </c:forEach>

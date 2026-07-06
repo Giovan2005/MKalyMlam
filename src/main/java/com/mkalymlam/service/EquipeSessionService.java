@@ -50,7 +50,7 @@ public class EquipeSessionService {
         //     }
         // }
 
-        EquipeSessionId id = new EquipeSessionId(idSession, idUtilisateur);
+        EquipeSessionId id = new EquipeSessionId(idSession, idUtilisateur.intValue());
         if (equipeSessionRepository.existsById(id)) {
             throw new IllegalArgumentException("Cet employe est deja affecte a cette session");
         }
@@ -90,7 +90,7 @@ public class EquipeSessionService {
 
     @Transactional
     public void retirer(Long idSession, Long idUtilisateur) {
-        EquipeSessionId id = new EquipeSessionId(idSession, idUtilisateur);
+        EquipeSessionId id = new EquipeSessionId(idSession, idUtilisateur.intValue());
         if (!equipeSessionRepository.existsById(id)) {
             throw new IllegalArgumentException("Affectation introuvable pour cette session et cet utilisateur");
         }

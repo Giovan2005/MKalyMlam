@@ -84,6 +84,7 @@ public class SessionTruckService {
         sessionTruck.setStatutSession(statutOuverte);
 
         SessionTruck saved = sessionTruckRepository.save(sessionTruck);
+        // Long id = chauffeur.getIdUtilisateur().longValue();
         saveChauffeur(saved, chauffeur);
 
         return saved;
@@ -127,7 +128,7 @@ public class SessionTruckService {
         Role roleChauffeur = roleRepository.findByLibelle("CHAUFFEUR");
 
         EquipeSession equipeSession = new EquipeSession();
-        equipeSession.setId(new EquipeSessionId(sessionTruck.getId(), chauffeur.getIdUtilisateur().longValue()));
+        equipeSession.setId(new EquipeSessionId(sessionTruck.getId(), chauffeur.getIdUtilisateur()));
         equipeSession.setSessionTruck(sessionTruck);
         equipeSession.setUtilisateur(chauffeur);
         equipeSession.setRoleDuJour(roleChauffeur);

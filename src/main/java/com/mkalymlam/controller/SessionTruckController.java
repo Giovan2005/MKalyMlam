@@ -69,6 +69,7 @@ public class SessionTruckController {
             redirectAttributes.addFlashAttribute("success", "Session ouverte avec succès");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
+            throw e;
         }
         return "redirect:/session/liste";
     }

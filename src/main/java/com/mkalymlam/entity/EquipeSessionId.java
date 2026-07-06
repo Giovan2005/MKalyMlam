@@ -8,12 +8,12 @@ import java.util.Objects;
 public class EquipeSessionId implements Serializable {
 
     private Long idSession;
-    private Long idUtilisateur;
+    private Integer idUtilisateur;
 
     public EquipeSessionId() {
     }
 
-    public EquipeSessionId(Long idSession, Long idUtilisateur) {
+    public EquipeSessionId(Long idSession, Integer idUtilisateur) {
         this.idSession = idSession;
         this.idUtilisateur = idUtilisateur;
     }
@@ -26,11 +26,11 @@ public class EquipeSessionId implements Serializable {
         this.idSession = idSession;
     }
 
-    public Long getIdUtilisateur() {
+    public Integer getIdUtilisateur() {
         return idUtilisateur;
     }
 
-    public void setIdUtilisateur(Long idUtilisateur) {
+    public void setIdUtilisateur(Integer idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
 
