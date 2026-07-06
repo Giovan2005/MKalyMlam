@@ -137,38 +137,12 @@
                                     ${es.roleDuJour.libelle}
                                 </span>
                             </td>
-                            <!-- <td>
-                                <c:choose>
-                                    <c:when test="${es.utilisateur.role.libelle == 'REMPLACANT'}">
-                                        <span style="color:#D97706;font-weight:600;">
-                                            <i class="fas fa-exchange-alt"></i>
-                                            Remplaçant
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span style="color:#16A34A;font-weight:600;">
-                                            <i class="fas fa-check-circle"></i>
-                                            Fixe
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td> -->
-                            <!-- <td>
-                                <c:choose>
-                                    <c:when test="${es.salaireJournalierRemplacant != null}">
-                                        <fmt:formatNumber value="${es.salaireJournalierRemplacant}" type="number" groupingUsed="true"/> Ar/jour
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span style="color:#9ca3af;">—</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td> -->
                             <td>
                                 <form action="${pageContext.request.contextPath}/equipe/retirer" method="post"
                                       onsubmit="return confirm('Retirer cet employé de la session ?');"
                                       style="display:inline;">
                                     <input type="hidden" name="idSession" value="${es.sessionTruck.id}">
-                                    <input type="hidden" name="idUtilisateur" value="${es.utilisateur.id}">
+                                    <input type="hidden" name="idUtilisateur" value="${es.utilisateur.idUtilisateur}">
                                     <button type="submit" class="btn-delete">
                                         <i class="fas fa-times"></i>
                                         Retirer

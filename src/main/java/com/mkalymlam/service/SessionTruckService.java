@@ -16,9 +16,9 @@ import com.mkalymlam.entity.Truck;
 import com.mkalymlam.entity.Utilisateur;
 import com.mkalymlam.repository.EquipeSessionRepository;
 import com.mkalymlam.repository.ItineraireRepository;
+import com.mkalymlam.repository.RoleRepository;
 import com.mkalymlam.repository.SessionTruckRepository;
 import com.mkalymlam.repository.StatutSessionRepository;
-import com.mkalymlam.repository.RoleRepository;
 import com.mkalymlam.repository.TruckRepository;
 import com.mkalymlam.repository.UtilisateurRepository;
 
@@ -127,7 +127,7 @@ public class SessionTruckService {
         Role roleChauffeur = roleRepository.findByLibelle("CHAUFFEUR");
 
         EquipeSession equipeSession = new EquipeSession();
-        equipeSession.setId(new EquipeSessionId(sessionTruck.getId(), chauffeur.getId()));
+        equipeSession.setId(new EquipeSessionId(sessionTruck.getId(), chauffeur.getIdUtilisateur().longValue()));
         equipeSession.setSessionTruck(sessionTruck);
         equipeSession.setUtilisateur(chauffeur);
         equipeSession.setRoleDuJour(roleChauffeur);

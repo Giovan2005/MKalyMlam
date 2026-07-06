@@ -19,7 +19,7 @@ public interface EquipeSessionRepository extends JpaRepository<EquipeSession, Eq
 
     List<EquipeSession> findBySessionTruck_Id(Long sessionTruckId);
 
-    void deleteBySessionTruck_IdAndUtilisateur_Id(Long sessionTruckId, Long utilisateurId);
+//     void deleteBySessionTruck_IdAndUtilisateur_Id(Long sessionTruckId, Long utilisateurId);
 
     @Query("SELECT es FROM EquipeSession es WHERE "
             + "(:sessionId IS NULL OR es.sessionTruck.id = :sessionId) "
