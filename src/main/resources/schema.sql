@@ -283,6 +283,17 @@ CREATE TABLE "lotIngredient" (
     FOREIGN KEY ("idIngredient") REFERENCES "ingredient"("idIngredient")
 );
 
+<<<<<<<<< Temporary merge branch 1
+=========
+--     - Elements necessaires:
+--         -> 
+
+-- #### 2- Benefice totaux: 
+-- - globalite: 
+--     - Benefice globale 
+--     - Consultation:
+--         - Benefice / mois
+>>>>>>>>> Temporary merge branch 2
 CREATE TABLE "equipement" (
     "idEquipement" SERIAL PRIMARY KEY,
     "nomEquipement" VARCHAR(100) NOT NULL,
@@ -379,8 +390,8 @@ CREATE TABLE "ligneCommande" (
     FOREIGN KEY ("idProduit") REFERENCES "produit"("idProduit")
 );
 
--- ALTER TABLE "ligneCommande"
--- ALTER COLUMN "prixUnitaireFacture" DROP NOT NULL;
+ALTER TABLE "ligneCommande"
+ALTER COLUMN "prixUnitaireFacture" DROP NOT NULL;
 
 CREATE TABLE "personnalisationCommande" (
     "idPersonnalisation" SERIAL PRIMARY KEY,

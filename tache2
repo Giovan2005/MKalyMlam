@@ -1,0 +1,197 @@
+ **Assigné à : Loïc**
+
+### Entités concernées
+
+* `Equipe_Session`
+
+### Fonctionnalités à implémenter
+
+Permettre de définir, pour chaque journée de travail, quels employés sont présents et dans quel rôle :
+
+* Associer un ou plusieurs employés à une session du jour
+* Définir le rôle de chaque employé pour cette journée (`VENDEUSE`, `CUISINIER`, `CHAUFFEUR`)
+* Gérer le cas d'un remplaçant : si l'employé du jour est un `REMPLACANT`, appliquer un salaire journalier spécifique
+* Consulter la liste des employés affectés à une session donnée
+
+### Règle métier importante
+
+Si l'utilisateur affecté à la session a le rôle `REMPLACANT` dans sa fiche employé, le champ `salaire_journalier_remplacant` doit être obligatoirement renseigné pour cette session.
+
+---
+
+## Fichiers à créer
+
+### EquipeSession
+
+* `EquipeSession.java`
+* `EquipeSessionRepository.java`
+* `EquipeSessionService.java`
+* `EquipeSessionController.java`
+
+---
+
+## Structure de l'entité
+
+### Clé primaire composite
+
+* `id_session` → clé étrangère vers `SessionTruck`
+* `id_utilisateur` → clé étrangère vers `Utilisateur`
+
+### Champs supplémentaires
+
+* `role_du_jour` → enum (`VENDEUSE`, `CUISINIER`, `CHAUFFEUR`)
+* `salaire_journalier_remplacant` → Double (optionnel, uniquement pour les remplaçants)
+
+Exemple :
+
+```java
+@EmbeddedId
+private EquipeSessionId id;
+
+@ManyToOne
+@MapsId("idSession")
+private SessionTruck sessionTruck;
+
+@ManyToOne
+@MapsId("idUtilisateur")
+private Utilisateur utilisateur;
+
+@Enumerated(EnumType.STRING)
+private RoleDuJour roleDuJour;
+
+private Double salaireJournalierRemplacant;
+
+
+CREATE TABLE "sessionTruck" (
+    "idSession" SERIAL PRIMARY KEY,
+    "idTruck" INT NOT NULL,
+    "idItineraire" INT NOT NULL,
+    "dateSession" DATE NOT NULL,
+    "fondDeCaisseOuverture" NUMERIC(10, 2),
+    "fondDeCaisseCloture" NUMERIC(10, 2),
+    "chiffreAffaireTotal" NUMERIC(12, 2) DEFAULT 0,
+    "commissionTotaleEquipe" NUMERIC(10, 2) DEFAULT 0,
+    "idStatutSession" INT NOT NULL,
+    FOREIGN KEY ("idTruck") REFERENCES "truck"("idTruck"),
+    FOREIGN KEY ("idItineraire") REFERENCES "itineraire"("idItineraire"),
+    FOREIGN KEY ("idStatutSession") REFERENCES "statutSession"("idStatutSession")
+);
+
+CREATE TABLE "equipeSession" (
+    "idEquipeSession" SERIAL PRIMARY KEY,
+    "idSession" INT NOT NULL,
+    "idUtilisateur" INT NOT NULL,
+    "idRoleDuJour" INT NOT NULL,
+    "salaireJournalierRemplacant" NUMERIC(10, 2),
+    FOREIGN KEY ("idSession") REFERENCES "sessionTruck"("idSession"),
+    FOREIGN KEY ("idUtilisateur") REFERENCES "utilisateur"("idUtilisateur"),
+    FOREIGN KEY ("idRoleDuJour") REFERENCES "role"("idRole")
+);
+
+
+## Endpoints à créer
+
+* `/equipe/affecter` — Ajouter un employé à une session
+* `/equipe/retirer` — Retirer un employé d'une session
+* `/equipe/findBySession` — Lister tous les employés d'une session donnée
+* `/equipe/findAll`
+
+---
+
+## Affichage minimal
+
+### Page de gestion de l'équipe du jour
+
+Champs :
+
+* Sélection de la session (dropdown des sessions OUVERTES du jour)
+* Sélection de l'employé (dropdown des utilisateurs actifs)
+* Sélection du rôle du jour (dropdown : VENDEUSE / CUISINIER / CHAUFFEUR)
+* Champ salaire journalier (affiché uniquement si l'employé est un REMPLACANT)
+
+Action :
+
+* Bouton **Affecter à la session**
+
+### Liste des employés affectés
+
+Afficher pour chaque session :
+
+```text
+Session #1 — Analakely — 01/07/2026
+Jean    | CHAUFFEUR  | Fixe
+Marie   | VENDEUSE   | Fixe
+Ranto   | CUISINIER  | Remplaçant — 25 000 Ar/jour
+```
+
+---
+
+
+
+# Module : Gestion de l'exploitation du Food Truck
+
+# Sous-module : Gestion des trucks
+
+
+## 2.2 Gestion de la disponibilité [ Loic ]
+
+
+* Déclarer un truck disponible
+* Déclarer un truck indisponible
+* Déclarer un truck en maintenance
+* Consulter la disponibilité des trucks
+
+---
+
+## 2.3 Gestion de la maintenance [ Loic ]
+
+
+* Enregistrer une maintenance
+* Modifier une maintenance
+* Clôturer une maintenance
+* Consulter l'historique des maintenances
+
+---
+
+## 2.4 Historique des statuts [ Loic ]
+
+* Consulter les changements de disponibilité
+* Consulter les périodes de maintenance
+* Consulter l'historique complet d'un truck
+
+---
+
+# Sous-module : Gestion des itinéraires [ Loic ]
+
+* Filtres - généralisés???
+
+**Generalisés:**
+* Recherches
+
+
+## 2.2 Planification [ Loic ]
+
+Permet d'organiser les tournées.
+
+Fonctionnalités :
+
+* Définir le jour de passage
+* Définir les horaires
+* Associer des points de vente
+* Définir l'ordre des arrêts
+
+## 2.3 Consultation [ Loic ]
+
+* Rechercher un itinéraire
+* Filtrer par jour
+* Filtrer par disponibilité
+* Consulter les points de vente
+
+
+# Sous-module : Gestion des sessions d'exploitation
+
+* Filtres - généralisés???
+
+**Generalisés:**
+* Recherches
+it

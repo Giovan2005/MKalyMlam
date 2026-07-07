@@ -1,6 +1,11 @@
 com/mkalymlam/controller/SessionTruckController.class
+<<<<<<< HEAD
 com/mkalymlam/controller/StatistiqueViewController.class
+=======
+com/mkalymlam/service/EquipeSessionService.class
+>>>>>>> sprint_rattrapage_gestion_truck_loic
 com/mkalymlam/repository/IngredientRepository.class
+com/mkalymlam/controller/EquipeSessionController.class
 com/mkalymlam/view/ViewController.class
 com/mkalymlam/service/VenteService.class
 com/mkalymlam/entity/Utilisateur.class
@@ -17,11 +22,17 @@ com/mkalymlam/repository/RecetteBaseRepository.class
 com/mkalymlam/repository/UtilisateurRepository.class
 com/mkalymlam/entity/Truck.class
 com/mkalymlam/controller/ItineraireController.class
-com/mkalymlam/service/SessionTruckService.class
 com/mkalymlam/controller/RecetteBaseController.class
+<<<<<<< HEAD
 com/mkalymlam/repository/StatutSessionRepository.class
 com/mkalymlam/repository/SessionTruckRepository.class
 com/mkalymlam/controller/LotIngredientController.class
+=======
+com/mkalymlam/service/SessionTruckService.class
+com/mkalymlam/repository/StatutSessionRepository.class
+com/mkalymlam/repository/SessionTruckRepository.class
+com/mkalymlam/controller/IngredientController.class
+>>>>>>> sprint_rattrapage_gestion_truck_loic
 com/mkalymlam/entity/Role.class
 com/mkalymlam/controller/IngredientController.class
 com/mkalymlam/service/ItineraireService.class
@@ -29,18 +40,26 @@ com/mkalymlam/controller/VendeuseController.class
 com/mkalymlam/entity/Itineraire.class
 com/mkalymlam/entity/RecetteBase.class
 com/mkalymlam/entity/Commande.class
+<<<<<<< HEAD
 com/mkalymlam/service/LotIngredientService.class
+=======
+>>>>>>> sprint_rattrapage_gestion_truck_loic
 com/mkalymlam/controller/DashboardController.class
 com/mkalymlam/repository/ProduitRepository.class
 com/mkalymlam/repository/LigneCommandeRepository.class
 com/mkalymlam/entity/RecetteBaseId.class
+<<<<<<< HEAD
 com/mkalymlam/repository/CommandeRepository.class
 com/mkalymlam/controller/LigneCommandeController.class
+=======
+>>>>>>> sprint_rattrapage_gestion_truck_loic
 com/mkalymlam/controller/TruckController.class
+com/mkalymlam/controller/LigneCommandeController.class
 com/mkalymlam/entity/EquipeSession.class
 com/mkalymlam/entity/SessionTruck.class
 com/mkalymlam/entity/Ingredient.class
 com/mkalymlam/service/RecetteBaseService.class
+com/mkalymlam/entity/EquipeSessionId.class
 com/mkalymlam/entity/StatutSession.class
 com/mkalymlam/repository/ItineraireRepository.class
 com/mkalymlam/repository/RoleRepository.class

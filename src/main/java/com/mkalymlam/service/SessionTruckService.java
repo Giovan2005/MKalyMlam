@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mkalymlam.entity.EquipeSession;
+import com.mkalymlam.entity.EquipeSessionId;
 import com.mkalymlam.entity.Itineraire;
 import com.mkalymlam.entity.Role;
 import com.mkalymlam.entity.SessionTruck;
@@ -15,9 +16,9 @@ import com.mkalymlam.entity.Truck;
 import com.mkalymlam.entity.Utilisateur;
 import com.mkalymlam.repository.EquipeSessionRepository;
 import com.mkalymlam.repository.ItineraireRepository;
-import com.mkalymlam.repository.RoleRepository;
 import com.mkalymlam.repository.SessionTruckRepository;
 import com.mkalymlam.repository.StatutSessionRepository;
+import com.mkalymlam.repository.RoleRepository;
 import com.mkalymlam.repository.TruckRepository;
 import com.mkalymlam.repository.UtilisateurRepository;
 
@@ -27,30 +28,28 @@ public class SessionTruckService {
     private static final String STATUT_DISPONIBLE = "DISPONIBLE";
     private static final String STATUT_OUVERTE = "OUVERTE";
     private static final String STATUT_CLOTUREE = "CLOTUREE";
-    private static final String ROLE_CHAUFFEUR = "CHAUFFEUR";
-
     private final SessionTruckRepository sessionTruckRepository;
     private final TruckRepository truckRepository;
     private final ItineraireRepository itineraireRepository;
     private final StatutSessionRepository statutSessionRepository;
     private final UtilisateurRepository utilisateurRepository;
-    private final RoleRepository roleRepository;
     private final EquipeSessionRepository equipeSessionRepository;
+    private final RoleRepository roleRepository;
 
     public SessionTruckService(SessionTruckRepository sessionTruckRepository,
                                TruckRepository truckRepository,
                                ItineraireRepository itineraireRepository,
                                StatutSessionRepository statutSessionRepository,
                                UtilisateurRepository utilisateurRepository,
-                               RoleRepository roleRepository,
-                               EquipeSessionRepository equipeSessionRepository) {
+                               EquipeSessionRepository equipeSessionRepository,
+                               RoleRepository roleRepository) {
         this.sessionTruckRepository = sessionTruckRepository;
         this.truckRepository = truckRepository;
         this.itineraireRepository = itineraireRepository;
         this.statutSessionRepository = statutSessionRepository;
         this.utilisateurRepository = utilisateurRepository;
-        this.roleRepository = roleRepository;
         this.equipeSessionRepository = equipeSessionRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional
@@ -120,14 +119,15 @@ public class SessionTruckService {
         return sessionTruckRepository.findByDateSession(LocalDate.now());
     }
 
-    private void saveChauffeur(SessionTruck sessionTruck, Utilisateur chauffeur) {
-        Role roleChauffeur = roleRepository.findByLibelle(ROLE_CHAUFFEUR);
+    public List<SessionTruck> findAll() {
+        return sessionTruckRepository.findAll();
+    }
 
-        if (roleChauffeur == null) {
-            throw new IllegalArgumentException("Role CHAUFFEUR introuvable");
-        }
+    private void saveChauffeur(SessionTruck sessionTruck, Utilisateur chauffeur) {
+        Role roleChauffeur = roleRepository.findByLibelle("CHAUFFEUR");
 
         EquipeSession equipeSession = new EquipeSession();
+        equipeSession.setId(new EquipeSessionId(sessionTruck.getId(), chauffeur.getId()));
         equipeSession.setSessionTruck(sessionTruck);
         equipeSession.setUtilisateur(chauffeur);
         equipeSession.setRoleDuJour(roleChauffeur);

@@ -1,6 +1,8 @@
 package com.mkalymlam.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
+import com.mkalymlam.entity.StatutSession;
 import com.mkalymlam.entity.Truck;
+import com.mkalymlam.repository.SessionTruckRepository;
+import com.mkalymlam.repository.StatutDisponibiliteRepository;
+import com.mkalymlam.repository.StatutSessionRepository;
 import com.mkalymlam.service.TruckService;
 
 @Controller
@@ -17,9 +24,18 @@ import com.mkalymlam.service.TruckService;
 public class TruckController {
 
     private final TruckService truckService;
+    private final SessionTruckRepository sessionTruckRepository;
+    private final StatutSessionRepository statutSessionRepository;
+    private final StatutDisponibiliteRepository statutDisponibiliteRepository;
 
-    public TruckController(TruckService truckService) {
+    public TruckController(TruckService truckService,
+                           SessionTruckRepository sessionTruckRepository,
+                           StatutSessionRepository statutSessionRepository,
+                           StatutDisponibiliteRepository statutDisponibiliteRepository) {
         this.truckService = truckService;
+        this.sessionTruckRepository = sessionTruckRepository;
+        this.statutSessionRepository = statutSessionRepository;
+        this.statutDisponibiliteRepository = statutDisponibiliteRepository;
     }
 
     @PostMapping("/save")
@@ -56,9 +72,21 @@ public class TruckController {
         return truckService.findAll();
     }
 
-    @GetMapping("/disponibles")
-    @ResponseBody
-    public List<Truck> disponibles() {
-        return truckService.findDisponibles();
+    @GetMapping("/gestion_truck")
+    public String disponibles(Model model) {
+        List<Truck> trucks = truckService.findAll();
+        StatutSession statutOuverte = statutSessionRepository.findByLibelle("OUVERTE");
+
+        Map<Long, String> truckStatutDisplay = new HashMap<>();
+        for (Truck truck : trucks) {
+            boolean enSession = statutOuverte != null
+                    && sessionTruckRepository.existsByTruckAndStatutSession(truck, statutOuverte);
+            truckStatutDisplay.put(truck.getId(), truckService.getStatutDisplay(truck, enSession));
+        }
+
+        model.addAttribute("trucks", trucks);
+        model.addAttribute("truckStatutDisplay", truckStatutDisplay);
+        model.addAttribute("statuts", statutDisponibiliteRepository.findAll());
+        return "truck/gestion_truck";
     }
 }
