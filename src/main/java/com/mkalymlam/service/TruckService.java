@@ -97,4 +97,19 @@ public class TruckService {
         }
         return value;
     }
+    
+
+    public String getStatutDisplay(Truck truck, boolean enSession) {
+        if (enSession) {
+            return "Indisponnible - En session";
+        }
+        String libelle = truck.getStatutDisponibilite().getLibelle();
+        if ("EN_MAINTENANCE".equals(libelle)) {
+            return "Indisponnible - En maintenance";
+        }
+        if ("PANNE".equals(libelle)) {
+            return "Indisponnible - En panne";
+        }
+        return "Disponible";
+    }
 }

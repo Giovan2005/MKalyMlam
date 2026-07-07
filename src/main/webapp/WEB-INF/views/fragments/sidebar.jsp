@@ -6,7 +6,7 @@
 </head>
 <div class="sidebar">
 
-    <h2>ADMIN PANEL</h2>
+    <h2>M'Kaly M'Lam</h2>
 
     <%-- <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a> --%>
 
@@ -83,5 +83,11 @@
     class="${activeMenu == 'equipe' ? 'active' : ''}">
         Équipe
     </a>
+    <a href="${pageContext.request.contextPath}/truck/gestion_truck"
+    class="${activeMenu == 'truck' ? 'active' : ''}">
+        Truck
+    </a>
+    
+
 
 </div>
