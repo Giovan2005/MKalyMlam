@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 import com.mkalymlam.entity.Itineraire;
 import com.mkalymlam.service.ItineraireService;
@@ -26,9 +29,17 @@ public class ItineraireController {
     // ============================
 
     @GetMapping
-    public String list(Model model) {
+    public String list(@RequestParam(name = "nomZone", required = false) String nomZone,
+                       @RequestParam(name = "jourSemaine", required = false) String jourSemaine,
+                       @RequestParam(name = "lieuExact", required = false) String lieuExact,
+                       Model model) {
 
-        model.addAttribute("itineraires", service.findAll());
+        List<Itineraire> result = service.search(nomZone, jourSemaine, lieuExact);
+
+        model.addAttribute("itineraires", result);
+        model.addAttribute("selectedNomZone", nomZone);
+        model.addAttribute("selectedJourSemaine", jourSemaine);
+        model.addAttribute("selectedLieuExact", lieuExact);
 
         return "itineraire/list";
     }

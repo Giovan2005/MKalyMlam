@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +25,8 @@ import com.mkalymlam.service.TruckService;
 @Controller
 @RequestMapping("/truck")
 public class TruckController {
+
+    private static final Logger log = LoggerFactory.getLogger(TruckController.class);
 
     private final TruckService truckService;
     private final SessionTruckRepository sessionTruckRepository;
@@ -74,19 +79,31 @@ public class TruckController {
 
     @GetMapping("/gestion_truck")
     public String disponibles(Model model) {
-        List<Truck> trucks = truckService.findAll();
-        StatutSession statutOuverte = statutSessionRepository.findByLibelle("OUVERTE");
+        try {
+            List<Truck> trucks = truckService.findAll();
+            StatutSession statutOuverte = statutSessionRepository.findByLibelle("OUVERTE");
 
-        Map<Long, String> truckStatutDisplay = new HashMap<>();
-        for (Truck truck : trucks) {
-            boolean enSession = statutOuverte != null
-                    && sessionTruckRepository.existsByTruckAndStatutSession(truck, statutOuverte);
-            truckStatutDisplay.put(truck.getId(), truckService.getStatutDisplay(truck, enSession));
+            Map<Long, String> truckStatutDisplay = new HashMap<>();
+            for (Truck truck : trucks) {
+                boolean enSession = statutOuverte != null
+                        && sessionTruckRepository.existsByTruckAndStatutSession(truck, statutOuverte);
+                truckStatutDisplay.put(truck.getId(), truckService.getStatutDisplay(truck, enSession));
+            }
+
+            model.addAttribute("trucks", trucks);
+            model.addAttribute("truckStatutDisplay", truckStatutDisplay);
+            model.addAttribute("statuts", statutDisponibiliteRepository.findAll());
+        } catch (Exception e) {
+            log.error("Erreur dans gestion_truck", e);
+            try {
+                model.addAttribute("trucks", truckService.findAll());
+            } catch (Exception ex) {
+                log.error("Erreur aussi dans le catch", ex);
+                model.addAttribute("trucks", List.of());
+            }
+            model.addAttribute("truckStatutDisplay", new HashMap<>());
+            model.addAttribute("statuts", List.of());
         }
-
-        model.addAttribute("trucks", trucks);
-        model.addAttribute("truckStatutDisplay", truckStatutDisplay);
-        model.addAttribute("statuts", statutDisponibiliteRepository.findAll());
         return "truck/gestion_truck";
     }
 }

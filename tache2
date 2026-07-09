@@ -178,6 +178,7 @@ Fonctionnalités :
 * Définir le jour de passage
 * Définir les horaires
 * Associer des points de vente
+
 * Définir l'ordre des arrêts
 
 ## 2.3 Consultation [ Loic ]
@@ -194,4 +195,36 @@ Fonctionnalités :
 
 **Generalisés:**
 * Recherches
-it
+
+
+
+Tout est implémenté et compile avec succès.
+Résumé des modifications
+Nouvelles tables (exécuter migration_planification.sql sur votre base PostgreSQL) :
+- pointDeVente — points de vente (nom, adresse, description, actif)
+- itineraireArret — liaison itinéraire ↔ point de vente avec ordre
+Nouveaux fichiers :
+Fichier
+entity/PointDeVente.java
+entity/ItineraireArret.java
+repository/PointDeVenteRepository.java
+repository/ItineraireArretRepository.java
+service/PointDeVenteService.java
+service/PlanificationService.java
+controller/PlanificationController.java
+controller/ConsultationController.java
+controller/PointDeVenteController.java
+views/planification/
+views/consultation/
+views/pointDeVente/
+Fichier modifié :
+- sidebar.jsp — ajout des liens Planification, Consultation, Points de vente
+Routes disponibles :
+- GET /planification — liste des tournées avec gestion des arrêts
+- GET /planification/{id} — détail d'une tournée + ses points de vente ordonnés
+- GET /planification/{id}/edit — associer/ordonner les points de vente
+- POST /planification/{id}/arrets/save — enregistrer les arrêts
+- GET /consultation — recherche par zone, jour, disponibilité
+- GET /consultation/{id} — détail consultation avec points de vente
+- GET/POST /points-vente — CRUD complet des points de vente
+Avant de lancer l'application, exécutez le script SQL sur votre base :

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.mkalymlam.entity.Itineraire;
 import com.mkalymlam.repository.ItineraireRepository;
+import jakarta.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ItineraireService {
@@ -21,6 +23,24 @@ public class ItineraireService {
 
     public List<Itineraire> findAll() {
         return itineraireRepository.findAll();
+    }
+
+    public List<Itineraire> search(String nomZone, String jourSemaine, String lieuExact) {
+        return itineraireRepository.findAll((root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (nomZone != null && !nomZone.isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("nomZone")),
+                                       "%" + nomZone.toLowerCase() + "%"));
+            }
+            if (jourSemaine != null && !jourSemaine.isBlank()) {
+                predicates.add(cb.equal(root.get("jourSemaine"), jourSemaine));
+            }
+            if (lieuExact != null && !lieuExact.isBlank()) {
+                predicates.add(cb.like(cb.lower(root.get("lieuExact")),
+                                       "%" + lieuExact.toLowerCase() + "%"));
+            }
+            return cb.and(predicates.toArray(new Predicate[0]));
+        });
     }
 
     public Itineraire find(Long id) {

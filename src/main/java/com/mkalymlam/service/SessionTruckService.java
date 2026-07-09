@@ -1,6 +1,7 @@
 package com.mkalymlam.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import com.mkalymlam.repository.StatutSessionRepository;
 import com.mkalymlam.repository.RoleRepository;
 import com.mkalymlam.repository.TruckRepository;
 import com.mkalymlam.repository.UtilisateurRepository;
+
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class SessionTruckService {
@@ -121,6 +124,30 @@ public class SessionTruckService {
 
     public List<SessionTruck> findAll() {
         return sessionTruckRepository.findAll();
+    }
+
+    public List<SessionTruck> search(Long idTruck, Long idItineraire,
+                                     Long idStatut, LocalDate dateDebut,
+                                     LocalDate dateFin) {
+        return sessionTruckRepository.findAll((root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (idTruck != null) {
+                predicates.add(cb.equal(root.get("truck").get("id"), idTruck));
+            }
+            if (idItineraire != null) {
+                predicates.add(cb.equal(root.get("itineraire").get("id"), idItineraire));
+            }
+            if (idStatut != null) {
+                predicates.add(cb.equal(root.get("statutSession").get("id"), idStatut));
+            }
+            if (dateDebut != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("dateSession"), dateDebut));
+            }
+            if (dateFin != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("dateSession"), dateFin));
+            }
+            return cb.and(predicates.toArray(new Predicate[0]));
+        });
     }
 
     private void saveChauffeur(SessionTruck sessionTruck, Utilisateur chauffeur) {

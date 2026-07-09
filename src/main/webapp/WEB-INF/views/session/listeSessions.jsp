@@ -39,6 +39,57 @@
             </div>
         </c:if>
 
+        <!-- Filtres -->
+        <form class="filter-form" method="get" action="${pageContext.request.contextPath}/session/liste">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="idTruck">Truck</label>
+                    <select id="idTruck" name="idTruck">
+                        <option value="">Tous les trucks</option>
+                        <c:forEach var="t" items="${trucks}">
+                            <option value="${t.id}" ${selectedIdTruck != null && selectedIdTruck == t.id ? 'selected' : ''}>
+                                ${t.immatriculation}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="idItineraire">Itinéraire</label>
+                    <select id="idItineraire" name="idItineraire">
+                        <option value="">Tous les itinéraires</option>
+                        <c:forEach var="i" items="${itineraires}">
+                            <option value="${i.id}" ${selectedIdItineraire != null && selectedIdItineraire == i.id ? 'selected' : ''}>
+                                ${i.nomZone}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="idStatut">Statut</label>
+                    <select id="idStatut" name="idStatut">
+                        <option value="">Tous les statuts</option>
+                        <c:forEach var="s" items="${statuts}">
+                            <option value="${s.id}" ${selectedIdStatut != null && selectedIdStatut == s.id ? 'selected' : ''}>
+                                ${s.libelle}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateDebut">Date début</label>
+                    <input type="date" id="dateDebut" name="dateDebut" value="${selectedDateDebut}">
+                </div>
+                <div class="filter-group">
+                    <label for="dateFin">Date fin</label>
+                    <input type="date" id="dateFin" name="dateFin" value="${selectedDateFin}">
+                </div>
+                <div class="filter-actions">
+                    <button type="submit" class="btn-filter">Filtrer</button>
+                    <a href="${pageContext.request.contextPath}/session/liste" class="btn-reset">Réinitialiser</a>
+                </div>
+            </div>
+        </form>
+
         <div class="table-container">
 
             <!-- En-tête -->
@@ -47,7 +98,7 @@
                 <h1>
                     <i class="fas fa-calendar-day"
                        style="color: var(--primary); margin-right:10px;"></i>
-                    Sessions du jour
+                    Sessions
                 </h1>
 
                 <a href="${pageContext.request.contextPath}/session/ouvrir"
@@ -57,7 +108,6 @@
 
             </div>
 
-            <!-- Tableau -->
             <table>
 
                 <thead>
@@ -75,7 +125,7 @@
 
                 <tbody>
 
-                <!-- Aucune session -->
+                
                 <c:if test="${empty sessions}">
                     <tr>
 
@@ -103,7 +153,7 @@
                     </tr>
                 </c:if>
 
-                <!-- Liste des sessions -->
+              
                 <c:forEach var="session" items="${sessions}" varStatus="loop">
 
                     <tr>
@@ -138,7 +188,7 @@
 
                         <td>
                             <span style="font-weight:600;color:var(--primary);">
-                                € ${session.fondDeCaisseOuverture}
+                                ${session.fondDeCaisseOuverture}AR
                             </span>
                         </td>
 

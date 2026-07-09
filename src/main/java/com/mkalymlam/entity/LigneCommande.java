@@ -14,11 +14,7 @@ import jakarta.persistence.Transient;
 
 
 @Entity
-<<<<<<< HEAD
 @Table(name = "\"ligneCommande\"")
-=======
-@Table(name = "LigneCommande")
->>>>>>> sprint_rattrapage_gestion_truck_loic
 public class LigneCommande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

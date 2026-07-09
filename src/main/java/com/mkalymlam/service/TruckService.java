@@ -103,6 +103,9 @@ public class TruckService {
         if (enSession) {
             return "Indisponnible - En session";
         }
+        if (truck.getStatutDisponibilite() == null) {
+            return "Disponible";
+        }
         String libelle = truck.getStatutDisponibilite().getLibelle();
         if ("EN_MAINTENANCE".equals(libelle)) {
             return "Indisponnible - En maintenance";

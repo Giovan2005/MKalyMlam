@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+
 import com.mkalymlam.entity.EquipeSession;
 import com.mkalymlam.entity.Itineraire;
 import com.mkalymlam.entity.SessionTruck;
+import com.mkalymlam.entity.StatutSession;
 import com.mkalymlam.entity.Truck;
 import com.mkalymlam.entity.Utilisateur;
 import com.mkalymlam.repository.EquipeSessionRepository;
 import com.mkalymlam.repository.ItineraireRepository;
+import com.mkalymlam.repository.StatutSessionRepository;
 import com.mkalymlam.repository.UtilisateurRepository;
 import com.mkalymlam.service.SessionTruckService;
 import com.mkalymlam.service.TruckService;
@@ -31,17 +35,20 @@ public class SessionTruckController {
     private final ItineraireRepository itineraireRepository;
     private final UtilisateurRepository utilisateurRepository;
     private final EquipeSessionRepository equipeSessionRepository;
+    private final StatutSessionRepository statutSessionRepository;
 
     public SessionTruckController(SessionTruckService sessionTruckService,
                                   TruckService truckService,
                                   ItineraireRepository itineraireRepository,
                                   UtilisateurRepository utilisateurRepository,
-                                  EquipeSessionRepository equipeSessionRepository) {
+                                  EquipeSessionRepository equipeSessionRepository,
+                                  StatutSessionRepository statutSessionRepository) {
         this.sessionTruckService = sessionTruckService;
         this.truckService = truckService;
         this.itineraireRepository = itineraireRepository;
         this.utilisateurRepository = utilisateurRepository;
         this.equipeSessionRepository = equipeSessionRepository;
+        this.statutSessionRepository = statutSessionRepository;
     }
 
     @GetMapping("/ouvrir")
@@ -72,8 +79,20 @@ public class SessionTruckController {
     }
 
     @GetMapping("/liste")
-    public String listeSessions(Model model) {
-        List<SessionTruck> sessions = sessionTruckService.findSessionsDuJour();
+    public String listeSessions(@RequestParam(name = "idTruck", required = false) Long idTruck,
+                                @RequestParam(name = "idItineraire", required = false) Long idItineraire,
+                                @RequestParam(name = "idStatut", required = false) Long idStatut,
+                                @RequestParam(name = "dateDebut", required = false) String dateDebutStr,
+                                @RequestParam(name = "dateFin", required = false) String dateFinStr,
+                                Model model) {
+
+        LocalDate dateDebut = dateDebutStr != null && !dateDebutStr.isBlank()
+                ? LocalDate.parse(dateDebutStr) : null;
+        LocalDate dateFin = dateFinStr != null && !dateFinStr.isBlank()
+                ? LocalDate.parse(dateFinStr) : null;
+
+        List<SessionTruck> sessions = sessionTruckService.search(idTruck, idItineraire,
+                idStatut, dateDebut, dateFin);
         List<String> chauffeurs = new ArrayList<>();
 
         for (SessionTruck s : sessions) {
@@ -88,6 +107,14 @@ public class SessionTruckController {
 
         model.addAttribute("sessions", sessions);
         model.addAttribute("chauffeurs", chauffeurs);
+        model.addAttribute("trucks", truckService.findAll());
+        model.addAttribute("itineraires", itineraireRepository.findAll());
+        model.addAttribute("statuts", statutSessionRepository.findAll());
+        model.addAttribute("selectedIdTruck", idTruck);
+        model.addAttribute("selectedIdItineraire", idItineraire);
+        model.addAttribute("selectedIdStatut", idStatut);
+        model.addAttribute("selectedDateDebut", dateDebutStr);
+        model.addAttribute("selectedDateFin", dateFinStr);
         return "session/listeSessions";
     }
 

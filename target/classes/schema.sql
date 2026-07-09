@@ -283,17 +283,17 @@ CREATE TABLE "lotIngredient" (
     FOREIGN KEY ("idIngredient") REFERENCES "ingredient"("idIngredient")
 );
 
-<<<<<<< HEAD
-=======
-    - Elements necessaires:
-        -> 
+<<<<<<<<< Temporary merge branch 1
+=========
+--     - Elements necessaires:
+--         -> 
 
-#### 2- Benefice totaux: 
-- globalite: 
-    - Benefice globale 
-    - Consultation:
-        - Benefice / mois
->>>>>>> sprint_rattrapage_gestion_truck_loic
+-- #### 2- Benefice totaux: 
+-- - globalite: 
+--     - Benefice globale 
+--     - Consultation:
+--         - Benefice / mois
+>>>>>>>>> Temporary merge branch 2
 CREATE TABLE "equipement" (
     "idEquipement" SERIAL PRIMARY KEY,
     "nomEquipement" VARCHAR(100) NOT NULL,

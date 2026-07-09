@@ -1,77 +1,33 @@
-<<<<<<< HEAD
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/MkalymlamApplication.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/CommandeController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/DashboardController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/IngredientController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/ItineraireController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/LigneCommandeController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/LotIngredientController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/ProduitController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/RecetteBaseController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/SessionTruckController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueViewController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/TruckController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/controller/VendeuseController.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Commande.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/EquipeSession.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Ingredient.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Itineraire.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/LigneCommande.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/LotIngredient.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Produit.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBase.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBaseId.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Role.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/SessionTruck.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/StatutDisponibilite.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/StatutSession.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Truck.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/entity/Utilisateur.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/CommandeRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/EquipeSessionRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/IngredientRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/ItineraireRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/LigneCommandeRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/LotIngredientRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/ProduitRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/RecetteBaseRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/RoleRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/SessionTruckRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/StatutDisponibiliteRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/StatutSessionRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/TruckRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/repository/UtilisateurRepository.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/IngredientService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/ItineraireService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/LotIngredientService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/ProduitService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/RecetteBaseService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/SessionTruckService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/TruckService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/service/VenteService.java
-/home/itu/Documents/Miantsa/S4/Mme Baovola/code/MKalyMlam/src/main/java/com/mkalymlam/view/ViewController.java
-=======
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/MkalymlamApplication.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/CommandeController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/ConsultationController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/DashboardController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/EquipeSessionController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/IngredientController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/ItineraireController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/LigneCommandeController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/LotIngredientController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/MaintenanceController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/PlanificationController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/PointDeVenteController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/ProduitController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/RecetteBaseController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/SessionTruckController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueController.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/StatistiqueViewController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/TruckController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/controller/VendeuseController.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Commande.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/EquipeSession.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/EquipeSessionId.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/HistoriqueMaintenance.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/HistoriqueStatus.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Ingredient.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Itineraire.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/ItineraireArret.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/LigneCommande.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/LotIngredient.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/PointDeVente.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Produit.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBase.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/RecetteBaseId.java
@@ -83,9 +39,14 @@
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/entity/Utilisateur.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/CommandeRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/EquipeSessionRepository.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/HistoriqueMaintenanceRepository.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/HistoriqueStatusRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/IngredientRepository.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/ItineraireArretRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/ItineraireRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/LigneCommandeRepository.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/LotIngredientRepository.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/PointDeVenteRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/ProduitRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/RecetteBaseRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/RoleRepository.java
@@ -95,14 +56,17 @@
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/TruckRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/repository/UtilisateurRepository.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/EquipeSessionService.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/HistoriqueMaintenanceService.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/HistoriqueStatusService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/IngredientService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/ItineraireService.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/LotIngredientService.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/PlanificationService.java
+/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/PointDeVenteService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/ProduitService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/RecetteBaseService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/SessionTruckService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService.java
-/home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/StatistiqueService1.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/TruckService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/service/VenteService.java
 /home/fandresena-loic/S4/projet S4/spring boot/MKalyMlam/src/main/java/com/mkalymlam/view/ViewController.java
->>>>>>> sprint_rattrapage_gestion_truck_loic

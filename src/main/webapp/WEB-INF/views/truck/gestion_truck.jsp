@@ -46,13 +46,13 @@
                                     <c:when test="${display == 'Disponible'}">
                                         <span class="badge badge-success">${display}</span>
                                     </c:when>
-                                    <c:when test="${display.startsWith('Indisponnible - En session')}">
+                                    <c:when test="${display == 'Indisponnible - En session'}">
                                         <span class="badge badge-warning">${display}</span>
                                     </c:when>
-                                    <c:when test="${display.startsWith('Indisponnible - En maintenance')}">
+                                    <c:when test="${display == 'Indisponnible - En maintenance'}">
                                         <span class="badge badge-secondary">${display}</span>
                                     </c:when>
-                                    <c:when test="${display.startsWith('Indisponnible - En panne')}">
+                                    <c:when test="${display == 'Indisponnible - En panne'}">
                                         <span class="badge badge-danger">${display}</span>
                                     </c:when>
                                     <c:otherwise>

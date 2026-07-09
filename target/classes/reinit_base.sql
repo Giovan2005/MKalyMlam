@@ -620,7 +620,7 @@ VALUES
 -- Vérifier les trucks insérés
 SELECT * FROM "truck";
 
--- Vérifier les chauffeurs insérés
+
 SELECT 
     u."idUtilisateur",
     u."nom",

@@ -95,6 +95,64 @@
     .btn-secondary:hover {
         background: #d1d5db;
     }
+    .form-card {
+        max-width: 600px;
+    }
+    .form-card .field {
+        margin-bottom: 20px;
+    }
+    .form-card .field label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #4b5563;
+    }
+    .form-card .field .input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        color: #1f2937;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-card .field .input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1);
+    }
+    .form-card .field textarea.input {
+        resize: vertical;
+        min-height: 80px;
+    }
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 28px;
+    }
+    .btn-cancel {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 20px;
+        background: #e5e7eb;
+        color: #374151;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+    .btn-cancel:hover {
+        background: #d1d5db;
+        color: #374151;
+    }
     .badge-success {
         background: #d4edda;
         color: #155724;

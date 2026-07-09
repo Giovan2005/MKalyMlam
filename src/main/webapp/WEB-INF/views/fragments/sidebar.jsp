@@ -88,11 +88,35 @@
     class="${activeMenu == 'equipe' ? 'active' : ''}">
         Équipe
     </a>
+    <a href="${pageContext.request.contextPath}/itineraire"
+    class="${activeMenu == 'itineraire' ? 'active' : ''}">
+        Itinéraires
+    </a>
     <a href="${pageContext.request.contextPath}/truck/gestion_truck"
     class="${activeMenu == 'truck' ? 'active' : ''}">
         Truck
     </a>
-    
 
+    <a href="${pageContext.request.contextPath}/maintenance/list"
+    class="${activeMenu == 'maintenance' ? 'active' : ''}">
+        Maintenance
+    </a>
+
+    <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+
+    <a href="${pageContext.request.contextPath}/planification"
+    class="${activeMenu == 'planification' ? 'active' : ''}">
+         Planification
+    </a>
+
+    <a href="${pageContext.request.contextPath}/consultation"
+    class="${activeMenu == 'consultation' ? 'active' : ''}">
+        Consultation
+    </a>
+
+    <a href="${pageContext.request.contextPath}/points-vente"
+    class="${activeMenu == 'pointsVente' ? 'active' : ''}">
+        Points de vente
+    </a>
 
 </div>
