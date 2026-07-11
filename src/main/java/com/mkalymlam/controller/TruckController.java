@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mkalymlam.entity.StatutSession;
 import com.mkalymlam.entity.Truck;
@@ -21,6 +23,7 @@ import com.mkalymlam.repository.SessionTruckRepository;
 import com.mkalymlam.repository.StatutDisponibiliteRepository;
 import com.mkalymlam.repository.StatutSessionRepository;
 import com.mkalymlam.service.TruckService;
+import com.mkalymlam.service.CsvExcelImportService;
 
 @Controller
 @RequestMapping("/truck")
@@ -29,15 +32,18 @@ public class TruckController {
     private static final Logger log = LoggerFactory.getLogger(TruckController.class);
 
     private final TruckService truckService;
+    private final CsvExcelImportService csvExcelImportService;
     private final SessionTruckRepository sessionTruckRepository;
     private final StatutSessionRepository statutSessionRepository;
     private final StatutDisponibiliteRepository statutDisponibiliteRepository;
 
     public TruckController(TruckService truckService,
+                           CsvExcelImportService csvExcelImportService,
                            SessionTruckRepository sessionTruckRepository,
                            StatutSessionRepository statutSessionRepository,
                            StatutDisponibiliteRepository statutDisponibiliteRepository) {
         this.truckService = truckService;
+        this.csvExcelImportService = csvExcelImportService;
         this.sessionTruckRepository = sessionTruckRepository;
         this.statutSessionRepository = statutSessionRepository;
         this.statutDisponibiliteRepository = statutDisponibiliteRepository;
@@ -105,5 +111,30 @@ public class TruckController {
             model.addAttribute("statuts", List.of());
         }
         return "truck/gestion_truck";
+    }
+
+    @GetMapping("/import")
+    public String pageImport(Model model) {
+        model.addAttribute("trucks", truckService.findAll());
+        return "truck/import";
+    }
+
+    @PostMapping("/import")
+    public String importData(@RequestParam("file") MultipartFile file,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            List<String> erreurs = csvExcelImportService.importFile(file, "truck");
+            if (erreurs.isEmpty()) {
+                redirectAttributes.addFlashAttribute("success",
+                    "Truck(s) importe(s) avec succes");
+            } else {
+                redirectAttributes.addFlashAttribute("warning",
+                    "Erreurs : " + String.join("; ", erreurs));
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                "Erreur lors de l'import : " + e.getMessage());
+        }
+        return "redirect:/truck/gestion_truck";
     }
 }

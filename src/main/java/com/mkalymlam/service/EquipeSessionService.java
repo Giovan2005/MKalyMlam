@@ -1,6 +1,7 @@
 package com.mkalymlam.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -110,5 +111,65 @@ public class EquipeSessionService {
             return getAllEquipeSessions();
         }
         return equipeSessionRepository.findByFilters(sessionId, roleId, nomEmploye, dateSession);
+    }
+
+    @Transactional
+    public List<String> importEquipesFromRows(List<String[]> data, String[] headers) {
+        List<String> erreurs = new ArrayList<>();
+
+        int idxIdSession = findColumnIndex(headers, "idSession");
+        int idxIdUtilisateur = findColumnIndex(headers, "idUtilisateur");
+        int idxIdRole = findColumnIndex(headers, "idRoleDuJour");
+        int idxSalaire = findColumnIndex(headers, "salaireJournalierRemplacant");
+
+        for (int i = 0; i < data.size(); i++) {
+            String[] row = data.get(i);
+            try {
+                String idSessionStr = getCellValue(row, idxIdSession);
+                String idUtilisateurStr = getCellValue(row, idxIdUtilisateur);
+                String idRoleStr = getCellValue(row, idxIdRole);
+                String salaireStr = getCellValue(row, idxSalaire);
+
+                if (idSessionStr.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : idSession manquant");
+                    continue;
+                }
+                if (idUtilisateurStr.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : idUtilisateur manquant");
+                    continue;
+                }
+                if (idRoleStr.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : idRoleDuJour manquant");
+                    continue;
+                }
+
+                Long idSession = Long.parseLong(idSessionStr);
+                Long idUtilisateur = Long.parseLong(idUtilisateurStr);
+                Long idRole = Long.parseLong(idRoleStr);
+                Double salaire = salaireStr.isEmpty() ? null : Double.parseDouble(salaireStr.replace(",", "."));
+
+                affecter(idSession, idUtilisateur, idRole, salaire);
+
+            } catch (NumberFormatException e) {
+                erreurs.add("Ligne " + (i + 2) + " : format numerique invalide");
+            } catch (Exception e) {
+                erreurs.add("Ligne " + (i + 2) + " : " + e.getMessage());
+            }
+        }
+        return erreurs;
+    }
+
+    private int findColumnIndex(String[] headers, String columnName) {
+        for (int i = 0; i < headers.length; i++) {
+            if (headers[i].trim().equalsIgnoreCase(columnName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getCellValue(String[] row, int index) {
+        if (index < 0 || index >= row.length) return "";
+        return row[index] != null ? row[index].trim() : "";
     }
 }

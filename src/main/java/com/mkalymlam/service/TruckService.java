@@ -1,5 +1,6 @@
 package com.mkalymlam.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -98,6 +99,50 @@ public class TruckService {
         return value;
     }
     
+
+    @Transactional
+    public List<String> importTrucksFromRows(List<String[]> data, String[] headers) {
+        List<String> erreurs = new ArrayList<>();
+
+        int idxImmatriculation = findColumnIndex(headers, "immatriculation");
+        int idxStatut = findColumnIndex(headers, "statut");
+
+        for (int i = 0; i < data.size(); i++) {
+            String[] row = data.get(i);
+            try {
+                String immatriculation = getCellValue(row, idxImmatriculation);
+                String statut = getCellValue(row, idxStatut);
+
+                if (immatriculation.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : immatriculation manquante");
+                    continue;
+                }
+
+                Truck truck = new Truck();
+                truck.setImmatriculation(immatriculation);
+                truck.setStatutDisponibilite(findStatut(normalizeStatut(statut)));
+                truckRepository.save(truck);
+
+            } catch (Exception e) {
+                erreurs.add("Ligne " + (i + 2) + " : " + e.getMessage());
+            }
+        }
+        return erreurs;
+    }
+
+    private int findColumnIndex(String[] headers, String columnName) {
+        for (int i = 0; i < headers.length; i++) {
+            if (headers[i].trim().equalsIgnoreCase(columnName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getCellValue(String[] row, int index) {
+        if (index < 0 || index >= row.length) return "";
+        return row[index] != null ? row[index].trim() : "";
+    }
 
     public String getStatutDisplay(Truck truck, boolean enSession) {
         if (enSession) {

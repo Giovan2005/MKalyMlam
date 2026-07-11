@@ -47,10 +47,10 @@
                 <!-- Sélection camion -->
                 <div class="form-group">
                     <label for="idTruck">
-                        Camion *
+                        Camion
                     </label>
                     <select id="idTruck" name="idTruck" required>
-                        <option value="">-- Sélectionner un camion --</option>
+                        <option value="">Sélectionner un camion </option>
                         <c:forEach items="${trucks}" var="truck">
                             <option value="${truck.id}">${truck.immatriculation}</option>
                         </c:forEach>
@@ -63,7 +63,7 @@
                         Itinéraire *
                     </label>
                     <select id="idItineraire" name="idItineraire" required>
-                        <option value="">-- Sélectionner un itinéraire --</option>
+                        <option value="">Sélectionner un itinéraire</option>
                         <c:forEach items="${itineraires}" var="itineraire">
                             <option value="${itineraire.id}">${itineraire.nomZone} - ${itineraire.lieuExact}</option>
                         </c:forEach>
@@ -76,7 +76,7 @@
                         Chauffeur *
                     </label>
                     <select id="idChauffeur" name="idChauffeur" required>
-                        <option value="">-- Sélectionner un chauffeur --</option>
+                        <option value="">Sélectionner un chauffeur</option>
                         <c:forEach items="${chauffeurs}" var="chauffeur">
                             <option value="${chauffeur.id}">${chauffeur.prenom} ${chauffeur.nom}</option>
                         </c:forEach>
@@ -86,7 +86,7 @@
                 <!-- Fond de caisse -->
                 <div class="form-group">
                     <label for="fondDeCaisseOuverture">
-                        Fond de caisse (€) *
+                        Fond de caisse (Ar)
                     </label>
                     <input 
                         type="number" 
@@ -94,7 +94,7 @@
                         name="fondDeCaisseOuverture"
                         step="0.01" 
                         min="0"
-                        placeholder="Ex: 150.00"
+                        placeholder="Ex: 10 000"
                         required>
                     
                     <small style="color:#6b7280;display:block;margin-top:5px;">

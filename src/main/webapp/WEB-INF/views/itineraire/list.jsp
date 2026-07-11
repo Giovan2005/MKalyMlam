@@ -19,10 +19,15 @@
     <div class="main">
         <div class="table-container">
             <div class="table-header">
-                <h1>Gestion des itinéraires</h1>
-                <a href="${pageContext.request.contextPath}/itineraire/new" class="btn-add">
-                    Ajouter un itinéraire
-                </a>
+                <h1>Gestion des itineraires</h1>
+                <div style="display:flex;gap:0.5rem;">
+                    <a href="${pageContext.request.contextPath}/itineraire/import" class="btn-add" style="background:#6366f1;">
+                        <i class="fas fa-file-import"></i> Importer CSV/Excel
+                    </a>
+                    <a href="${pageContext.request.contextPath}/itineraire/new" class="btn-add">
+                        Ajouter un itineraire
+                    </a>
+                </div>
             </div>
 
             <form class="filter-form" method="get" action="${pageContext.request.contextPath}/itineraire">

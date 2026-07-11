@@ -71,6 +71,11 @@
 
                 </a>
 
+                <a href="${pageContext.request.contextPath}/produits/import"
+                   class="btn-add" style="background:#6366f1;">
+                    <i class="fas fa-file-import"></i> Importer CSV/Excel
+                </a>
+
             </div>
 
             <!-- Tableau -->

@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 import com.mkalymlam.entity.EquipeSession;
 import com.mkalymlam.entity.SessionTruck;
 import com.mkalymlam.service.EquipeSessionService;
 import com.mkalymlam.service.SessionTruckService;
+import com.mkalymlam.service.CsvExcelImportService;
 import com.mkalymlam.repository.RoleRepository;
 import com.mkalymlam.repository.UtilisateurRepository;
 
@@ -26,15 +30,18 @@ public class EquipeSessionController {
 
     private final EquipeSessionService equipeSessionService;
     private final SessionTruckService sessionTruckService;
+    private final CsvExcelImportService csvExcelImportService;
     private final UtilisateurRepository utilisateurRepository;
     private final RoleRepository roleRepository;
 
     public EquipeSessionController(EquipeSessionService equipeSessionService,
                                    SessionTruckService sessionTruckService,
+                                   CsvExcelImportService csvExcelImportService,
                                    UtilisateurRepository utilisateurRepository,
                                    RoleRepository roleRepository) {
         this.equipeSessionService = equipeSessionService;
         this.sessionTruckService = sessionTruckService;
+        this.csvExcelImportService = csvExcelImportService;
         this.utilisateurRepository = utilisateurRepository;
         this.roleRepository = roleRepository;
     }
@@ -106,5 +113,29 @@ public class EquipeSessionController {
     @ResponseBody
     public List<EquipeSession> findAll() {
         return equipeSessionService.getAllEquipeSessions();
+    }
+
+    @GetMapping("/import")
+    public String pageImport(Model model) {
+        return "equipe/import";
+    }
+
+    @PostMapping("/import")
+    public String importData(@RequestParam("file") MultipartFile file,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            List<String> erreurs = csvExcelImportService.importFile(file, "equipe");
+            if (erreurs.isEmpty()) {
+                redirectAttributes.addFlashAttribute("success",
+                    "Affectation(s) importee(s) avec succes");
+            } else {
+                redirectAttributes.addFlashAttribute("warning",
+                    "Erreurs : " + String.join("; ", erreurs));
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                "Erreur lors de l'import : " + e.getMessage());
+        }
+        return "redirect:/equipe/list_equipe";
     }
 }

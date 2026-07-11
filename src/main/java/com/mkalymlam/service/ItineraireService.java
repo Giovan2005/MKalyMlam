@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mkalymlam.entity.Itineraire;
 import com.mkalymlam.repository.ItineraireRepository;
 import jakarta.persistence.criteria.Predicate;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -74,6 +75,73 @@ public class ItineraireService {
             throw new IllegalArgumentException("Itineraire" + id + " does not exist");
         }
         itineraireRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<String> importItinerairesFromRows(List<String[]> data, String[] headers) {
+        List<String> erreurs = new ArrayList<>();
+
+        int idxNomZone = findColumnIndex(headers, "nomZone");
+        int idxLieuExact = findColumnIndex(headers, "lieuExact");
+        int idxHeureDebut = findColumnIndex(headers, "heureDebutPrevue");
+        int idxHeureFin = findColumnIndex(headers, "heureFinPrevue");
+        int idxJourSemaine = findColumnIndex(headers, "jourSemaine");
+
+        for (int i = 0; i < data.size(); i++) {
+            String[] row = data.get(i);
+            try {
+                String nomZone = getCellValue(row, idxNomZone);
+                String lieuExact = getCellValue(row, idxLieuExact);
+                String heureDebutStr = getCellValue(row, idxHeureDebut);
+                String heureFinStr = getCellValue(row, idxHeureFin);
+                String jourSemaine = getCellValue(row, idxJourSemaine);
+
+                if (nomZone.isEmpty() && lieuExact.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : nomZone ou lieuExact requis");
+                    continue;
+                }
+
+                Itineraire itineraire = new Itineraire();
+                itineraire.setNomZone(nomZone);
+                itineraire.setLieuExact(lieuExact);
+                itineraire.setJourSemaine(jourSemaine);
+
+                if (!heureDebutStr.isEmpty()) {
+                    itineraire.setHeureDebutPrevue(parseTime(heureDebutStr));
+                }
+                if (!heureFinStr.isEmpty()) {
+                    itineraire.setHeureFinPrevue(parseTime(heureFinStr));
+                }
+
+                itineraireRepository.save(itineraire);
+
+            } catch (Exception e) {
+                erreurs.add("Ligne " + (i + 2) + " : " + e.getMessage());
+            }
+        }
+        return erreurs;
+    }
+
+    private int findColumnIndex(String[] headers, String columnName) {
+        for (int i = 0; i < headers.length; i++) {
+            if (headers[i].trim().equalsIgnoreCase(columnName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getCellValue(String[] row, int index) {
+        if (index < 0 || index >= row.length) return "";
+        return row[index] != null ? row[index].trim() : "";
+    }
+
+    private Time parseTime(String timeStr) {
+        String[] parts = timeStr.split(":");
+        int h = Integer.parseInt(parts[0]);
+        int m = parts.length > 1 ? Integer.parseInt(parts[1]) : 0;
+        int s = parts.length > 2 ? Integer.parseInt(parts[2]) : 0;
+        return Time.valueOf(String.format("%02d:%02d:%02d", h, m, s));
     }
 
     

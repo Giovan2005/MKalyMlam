@@ -50,6 +50,11 @@
 
                 </a>
 
+                <a href="${pageContext.request.contextPath}/recetteBase/import"
+                   class="btn-add" style="background:#6366f1;">
+                    <i class="fas fa-file-import"></i> Importer CSV/Excel
+                </a>
+
             </div>
 
             <!-- Table -->

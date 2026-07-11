@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ import com.mkalymlam.repository.StatutSessionRepository;
 import com.mkalymlam.repository.UtilisateurRepository;
 import com.mkalymlam.service.SessionTruckService;
 import com.mkalymlam.service.TruckService;
+import com.mkalymlam.service.CsvExcelImportService;
 
 @Controller
 @RequestMapping("/session")
@@ -32,6 +34,7 @@ public class SessionTruckController {
 
     private final SessionTruckService sessionTruckService;
     private final TruckService truckService;
+    private final CsvExcelImportService csvExcelImportService;
     private final ItineraireRepository itineraireRepository;
     private final UtilisateurRepository utilisateurRepository;
     private final EquipeSessionRepository equipeSessionRepository;
@@ -39,12 +42,14 @@ public class SessionTruckController {
 
     public SessionTruckController(SessionTruckService sessionTruckService,
                                   TruckService truckService,
+                                  CsvExcelImportService csvExcelImportService,
                                   ItineraireRepository itineraireRepository,
                                   UtilisateurRepository utilisateurRepository,
                                   EquipeSessionRepository equipeSessionRepository,
                                   StatutSessionRepository statutSessionRepository) {
         this.sessionTruckService = sessionTruckService;
         this.truckService = truckService;
+        this.csvExcelImportService = csvExcelImportService;
         this.itineraireRepository = itineraireRepository;
         this.utilisateurRepository = utilisateurRepository;
         this.equipeSessionRepository = equipeSessionRepository;
@@ -127,6 +132,30 @@ public class SessionTruckController {
             redirectAttributes.addFlashAttribute("success", "Session clôturée avec succès");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/session/liste";
+    }
+
+    @GetMapping("/import")
+    public String pageImport(Model model) {
+        return "session/import";
+    }
+
+    @PostMapping("/import")
+    public String importData(@RequestParam("file") MultipartFile file,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            List<String> erreurs = csvExcelImportService.importFile(file, "session");
+            if (erreurs.isEmpty()) {
+                redirectAttributes.addFlashAttribute("success",
+                    "Session(s) importee(s) avec succes");
+            } else {
+                redirectAttributes.addFlashAttribute("warning",
+                    "Erreurs : " + String.join("; ", erreurs));
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                "Erreur lors de l'import : " + e.getMessage());
         }
         return "redirect:/session/liste";
     }

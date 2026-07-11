@@ -19,7 +19,7 @@
 <div class="dashboard">
     <c:set var="activeMenu" value="sessionTruck"/>
 
-    <!-- Sidebar -->
+   
     <jsp:include page="/WEB-INF/views/fragments/sidebar.jsp" />
 
     <div class="main">
@@ -104,6 +104,10 @@
                 <a href="${pageContext.request.contextPath}/session/ouvrir"
                    class="btn-add">
                     Ouvrir une session
+                </a>
+                <a href="${pageContext.request.contextPath}/session/import"
+                   class="btn-add" style="background:#6366f1;">
+                    <i class="fas fa-file-import"></i> Importer CSV/Excel
                 </a>
 
             </div>

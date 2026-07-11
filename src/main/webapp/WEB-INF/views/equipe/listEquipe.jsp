@@ -43,14 +43,16 @@
             <div class="table-header">
                 <h1>
                     <i class="fas fa-list" style="color: var(--primary); margin-right:10px;"></i>
-                    Équipe affectée par session
+                    equipe affecte par session
                 </h1>
-                <button
-                        class="btn-add">
-                    <a href="${pageContext.request.contextPath}/equipe/affecter">ajouter equipe</a>
-            </button>
-
-                    </div>
+                <div style="display:flex;gap:0.5rem;">
+                    <a href="${pageContext.request.contextPath}/equipe/import"
+                       class="btn-add" style="background:#6366f1;color:#D1FAE5;">
+                        <i class="fas fa-file-import"></i> Importer CSV/Excel
+                    </a>
+                    <a style="color: #D1FAE5;" href="${pageContext.request.contextPath}/equipe/affecter"
+                       class="btn-add">ajouter equipe</a>
+                </div>
 
                     <form action="${pageContext.request.contextPath}/equipe/list_equipe" method="get" class="filter-form">
                 <div class="filter-row">

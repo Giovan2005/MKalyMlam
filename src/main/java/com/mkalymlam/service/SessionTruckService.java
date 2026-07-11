@@ -150,6 +150,89 @@ public class SessionTruckService {
         });
     }
 
+    @Transactional
+    public List<String> importSessionsFromRows(List<String[]> data, String[] headers) {
+        List<String> erreurs = new ArrayList<>();
+
+        int idxIdTruck = findColumnIndex(headers, "idTruck");
+        int idxIdItineraire = findColumnIndex(headers, "idItineraire");
+        int idxDateSession = findColumnIndex(headers, "dateSession");
+        int idxFondOuverture = findColumnIndex(headers, "fondDeCaisseOuverture");
+        int idxFondCloture = findColumnIndex(headers, "fondDeCaisseCloture");
+        int idxChiffreAffaire = findColumnIndex(headers, "chiffreAffaireTotal");
+        int idxCommission = findColumnIndex(headers, "commissionTotaleEquipe");
+        int idxStatut = findColumnIndex(headers, "statutSession");
+
+        for (int i = 0; i < data.size(); i++) {
+            String[] row = data.get(i);
+            try {
+                String idTruckStr = getCellValue(row, idxIdTruck);
+                String idItineraireStr = getCellValue(row, idxIdItineraire);
+                String dateSessionStr = getCellValue(row, idxDateSession);
+                String fondOuvertureStr = getCellValueDefault(row, idxFondOuverture, "0");
+                String fondClotureStr = getCellValueDefault(row, idxFondCloture, "0");
+                String caStr = getCellValueDefault(row, idxChiffreAffaire, "0");
+                String commStr = getCellValueDefault(row, idxCommission, "0");
+                String statutStr = getCellValueDefault(row, idxStatut, "OUVERTE");
+
+                if (idTruckStr.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : idTruck manquant");
+                    continue;
+                }
+                if (dateSessionStr.isEmpty()) {
+                    erreurs.add("Ligne " + (i + 2) + " : dateSession manquante");
+                    continue;
+                }
+
+                Truck truck = findTruck(Long.parseLong(idTruckStr));
+                Itineraire itineraire = idItineraireStr.isEmpty() ? null : findItineraire(Long.parseLong(idItineraireStr));
+                StatutSession statut = findStatutSession(statutStr.isEmpty() ? STATUT_OUVERTE : statutStr);
+
+                SessionTruck session = new SessionTruck();
+                session.setTruck(truck);
+                session.setItineraire(itineraire);
+                session.setDateSession(LocalDate.parse(dateSessionStr));
+                session.setFondDeCaisseOuverture(parseDouble(fondOuvertureStr));
+                session.setFondDeCaisseCloture(parseDouble(fondClotureStr));
+                session.setChiffreAffaireTotal(parseDouble(caStr));
+                session.setCommissionTotaleEquipe(parseDouble(commStr));
+                session.setStatutSession(statut);
+
+                sessionTruckRepository.save(session);
+
+            } catch (NumberFormatException e) {
+                erreurs.add("Ligne " + (i + 2) + " : format numerique invalide");
+            } catch (Exception e) {
+                erreurs.add("Ligne " + (i + 2) + " : " + e.getMessage());
+            }
+        }
+        return erreurs;
+    }
+
+    private int findColumnIndex(String[] headers, String columnName) {
+        for (int i = 0; i < headers.length; i++) {
+            if (headers[i].trim().equalsIgnoreCase(columnName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getCellValue(String[] row, int index) {
+        if (index < 0 || index >= row.length) return "";
+        return row[index] != null ? row[index].trim() : "";
+    }
+
+    private String getCellValueDefault(String[] row, int index, String defaultValue) {
+        String val = getCellValue(row, index);
+        return val.isEmpty() ? defaultValue : val;
+    }
+
+    private Double parseDouble(String val) {
+        if (val == null || val.isBlank()) return 0.0;
+        return Double.parseDouble(val.replace(",", "."));
+    }
+
     private void saveChauffeur(SessionTruck sessionTruck, Utilisateur chauffeur) {
         Role roleChauffeur = roleRepository.findByLibelle("CHAUFFEUR");
 

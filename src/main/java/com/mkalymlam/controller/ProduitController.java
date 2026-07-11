@@ -7,18 +7,24 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mkalymlam.entity.Produit;
 import com.mkalymlam.service.ProduitService;
+import com.mkalymlam.service.CsvExcelImportService;
 
 @Controller
 @RequestMapping("/produits")
 public class ProduitController {
 
     private final ProduitService service;
+    private final CsvExcelImportService csvExcelImportService;
 
-    public ProduitController(ProduitService service) {
+    public ProduitController(ProduitService service,
+                             CsvExcelImportService csvExcelImportService) {
         this.service = service;
+        this.csvExcelImportService = csvExcelImportService;
     }
 
     @GetMapping
@@ -107,6 +113,30 @@ public class ProduitController {
 
         service.deleteById(id);
 
+        return "redirect:/produits";
+    }
+
+    @GetMapping("/import")
+    public String pageImport(Model model) {
+        return "produit/import";
+    }
+
+    @PostMapping("/import")
+    public String importData(@RequestParam("file") MultipartFile file,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            List<String> erreurs = csvExcelImportService.importFile(file, "produit");
+            if (erreurs.isEmpty()) {
+                redirectAttributes.addFlashAttribute("success",
+                    "Produit(s) importe(s) avec succes");
+            } else {
+                redirectAttributes.addFlashAttribute("warning",
+                    "Erreurs : " + String.join("; ", erreurs));
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                "Erreur lors de l'import : " + e.getMessage());
+        }
         return "redirect:/produits";
     }
 }
